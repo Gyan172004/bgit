@@ -46,6 +46,15 @@ bgit
 
 Follow the on-screen prompts to add, commit, and push your changes. bgit will handle the rest, ensuring that only relevant files are included and that your Git repository remains clean and organized.
 
+## How it works?
+
+Here is a high level overview diagram of how bgit will work!
+
+![bgit-init](https://github.com/Gyan172004/bgit/assets/137227305/99c7aa1b-a4a4-46ab-bdbe-f9f14898ae33)
+![bgit-check](https://github.com/Gyan172004/bgit/assets/137227305/12d68127-30ce-4f07-8f9f-b815c8264f24)
+![Untitled-2024-04-22-0126](https://github.com/Gyan172004/bgit/assets/137227305/3f9ba8ec-b9aa-497e-950f-3f1d52955ba8)
+
+
 ## Contributing
 
 Contributions to bgit are welcome! If you encounter any issues or have suggestions for improvements, please feel free to open an issue or submit a pull request on the [bgit GitHub repository](https://github.com/Gyan172004/bgit).
