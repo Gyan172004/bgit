@@ -12,4 +12,3 @@ mod a12_no_secrets_staged;
 mod a13_git_lfs;
 mod a14_big_repo_size;
 mod a15_file_not_gitignored;
-

@@ -1,0 +1,12 @@
+mod git_add;
+mod git_branch;
+mod git_checkout;
+mod git_clean;
+mod git_clone;
+mod git_commit;
+mod git_filter_repo;
+mod git_init;
+mod git_pull;
+mod git_push;
+mod git_restore;
+mod git_status;

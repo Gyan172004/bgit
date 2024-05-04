@@ -1,3 +1,3 @@
-pub(crate) fn init() {
+pub(crate) fn log() {
     println!("Here is log!");
 }
