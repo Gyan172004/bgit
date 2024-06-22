@@ -8,3 +8,10 @@ mod ta07_has_unstaged_files;
 mod ta08_ask_to_stage_file;
 mod ta09_ask_to_stage_file_all_file;
 mod ta10_ask_to_stage_file_discretely_add;
+
+pub trait BgitTask {
+    fn new(name: String, id: u32) -> Self where Self: Sized;
+    fn get_name(&self) -> String;
+    fn get_id(&self) -> u32;
+    fn apply_task(&self) -> Result<Option<Box<dyn BgitTask>>, &str>;
+}

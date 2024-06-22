@@ -1,3 +1,4 @@
+#[allow(unused, dead_code)]
 use std::process::exit;
 use crate::cmd::{BgitCli, Commands};
 use crate::cmd::_clone_url::clone;

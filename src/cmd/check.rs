@@ -1,3 +1,3 @@
 pub(crate) fn check() {
-    println!("Here is log!");
+    println!("Here is check!");
 }
