@@ -1,3 +1,4 @@
+#[derive(Debug)]
 pub(crate) struct BGitError {
     name: String,
     workflow_name: String,

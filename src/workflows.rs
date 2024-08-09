@@ -1,21 +1,23 @@
+pub(crate) mod default;
+
 use crate::bgit_error::BGitError;
 use crate::step::Step;
 use crate::step::Task::{ActionStepTask, PromptStepTask};
 
-struct WorkflowQueue {
+pub(crate) struct WorkflowQueue {
     name: String,
     init_step: Step,
 }
 
 impl WorkflowQueue {
-    fn new(name: &str, init_step: Step) -> Self {
+    pub(crate) fn new(name: &str, init_step: Step) -> Self {
         WorkflowQueue {
             name: name.to_owned(),
             init_step,
         }
     }
 
-    fn execute(&self) -> Result<bool, BGitError> {
+    pub(crate) fn execute(&self) -> Result<bool, BGitError> {
         if let Step::Start(task) = &self.init_step {
             let mut next_step: Step = match task {
                 ActionStepTask(action_step_task) => action_step_task.execute(),

@@ -18,10 +18,10 @@ impl std::cmp::PartialEq for Task {
 }
 
 pub(crate) trait ActionStep {
-    fn new() -> Self
+    fn new(name: &str) -> Self
     where
         Self: Sized;
-    fn get_name(&self) -> String;
+    fn get_name(&self) -> &str;
     fn execute(&self) -> Step;
 }
 
