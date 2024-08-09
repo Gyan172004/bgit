@@ -15,6 +15,7 @@ mod a13_git_lfs;
 mod a14_big_repo_size;
 mod a15_file_not_gitignored;
 
+#[derive(Debug)]
 pub(crate) enum RuleLevel {
     Allow,
     Warning,
