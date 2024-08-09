@@ -20,3 +20,4 @@ impl BGitError {
         eprintln!("The command errored out for some reasons!\nName: {}\nWorflow Name: {}\nStep Name: {}\nMessage: {}", self.name, self.workflow_name, self.step_name, self.message);
     }
 }
+

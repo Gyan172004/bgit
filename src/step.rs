@@ -26,9 +26,9 @@ pub(crate) trait ActionStep {
 }
 
 pub(crate) trait PromptStep {
-    fn new() -> Self
+    fn new(name: &str) -> Self
     where
         Self: Sized;
-    fn get_name(&self) -> String;
+    fn get_name(&self) -> &str;
     fn execute(&self) -> Step;
 }
