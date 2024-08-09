@@ -1,4 +1,4 @@
-#[allow(unused, dead_code)]
+#![allow(unused_attributes, dead_code)]
 use crate::cmd::check::check;
 use crate::cmd::default::default_cmd_workflow;
 use crate::cmd::init::init;

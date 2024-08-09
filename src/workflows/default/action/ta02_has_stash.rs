@@ -1,5 +1,5 @@
 use crate::step::{ActionStep, Step};
-use git2::{Repository, StatusOptions};
+use git2::Repository;
 use std::env;
 
 pub(crate) struct HasStash {

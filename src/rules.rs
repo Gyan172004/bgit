@@ -1,4 +1,4 @@
-use crate::{bgit_error::{self, BGitError}, events::AtomicEvent};
+use crate::bgit_error::BGitError;
 
 mod a01_git_install;
 mod a02_git_name_email_setup;
