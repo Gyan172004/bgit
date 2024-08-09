@@ -13,18 +13,22 @@ pub(crate) enum Task {
 impl std::cmp::PartialEq for Task {
     fn eq(&self, _rhs: &Task) -> bool {
         // Disabled compare matching for Task enum
-        todo!("Implement Task PartialEq Matching")
+        todo!("Implement Task PartialEq Matching for dyn types")
     }
 }
 
 pub(crate) trait ActionStep {
-    fn new() -> Self where Self: Sized;
+    fn new() -> Self
+    where
+        Self: Sized;
     fn get_name(&self) -> String;
     fn execute(&self) -> Step;
 }
 
 pub(crate) trait PromptStep {
-    fn new() -> Self where Self: Sized;
+    fn new() -> Self
+    where
+        Self: Sized;
     fn get_name(&self) -> String;
     fn execute(&self) -> Step;
 }

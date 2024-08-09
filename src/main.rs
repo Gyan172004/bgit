@@ -1,40 +1,26 @@
 #[allow(unused, dead_code)]
-use std::process::exit;
-use crate::cmd::{BgitCli, Commands};
-use crate::cmd::_clone_url::clone;
 use crate::cmd::check::check;
 use crate::cmd::default::default_cmd_workflow;
 use crate::cmd::init::init;
 use crate::cmd::log::log;
+use crate::cmd::{Cli, Commands};
 
-mod rules;
+mod bgit_error;
 mod cmd;
 mod events;
-mod workflows;
+mod rules;
 mod step;
-mod bgit_error;
+mod workflows;
 
 fn main() {
-    let cli_instance = BgitCli::new();
+    let cli_instance_wrap = Cli::new();
 
-    if cli_instance.command.is_some() && cli_instance.clone_url.is_some() {
-        eprintln!("FATAL! Confusing args provided!");
-        exit(1);
-    }
-
-    match cli_instance.command {
-        Some(Commands::Log) => {log()}
-        Some(Commands::Init) => {init()}
-        Some(Commands::Check) => {check()}
-        None => {
-            match cli_instance.clone_url {
-                Some(clone_url) => {
-                    clone(&clone_url)
-                }
-                None => {
-                    default_cmd_workflow()
-                }
-            }
+    if let Some(cli_instance) = cli_instance_wrap {
+        match cli_instance.command {
+            Some(Commands::Log) => log(),
+            Some(Commands::Init) => init(),
+            Some(Commands::Check) => check(),
+            None => default_cmd_workflow(),
         }
     }
 }

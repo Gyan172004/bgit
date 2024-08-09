@@ -35,7 +35,7 @@ impl WorkflowQueue {
                 if let Step::Task(task) = next_step {
                     next_step = match task {
                         ActionStepTask(action_step_task) => action_step_task.execute(),
-                        PromptStepTask(prompt_step_task) => prompt_step_task.execute()
+                        PromptStepTask(prompt_step_task) => prompt_step_task.execute(),
                     }
                 } else {
                     unreachable!("This code is unreachable")
