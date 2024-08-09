@@ -11,6 +11,7 @@ mod events;
 mod rules;
 mod step;
 mod workflows;
+mod workflow_queue;
 
 fn main() {
     let cli_instance_wrap = Cli::new();
