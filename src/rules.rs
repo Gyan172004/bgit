@@ -1,4 +1,4 @@
-use crate::events::AtomicEvent;
+use crate::{bgit_error::{self, BGitError}, events::AtomicEvent};
 
 mod a01_git_install;
 mod a02_git_name_email_setup;
@@ -28,13 +28,14 @@ pub(crate) enum RuleOutput {
 }
 
 pub(crate) trait Rule {
-    fn new(name: String, id: u32, level: RuleLevel, events: Vec<Box<dyn AtomicEvent>>) -> Self
+    fn new(name: &str, description: &str, level: RuleLevel) -> Self
     where
         Self: Sized;
-    fn get_name(&self) -> String;
-    fn get_id(&self) -> u32;
+    fn get_name(&self) -> &str;
+    fn get_description(&self) -> &str;
     fn get_level(&self) -> RuleLevel;
-    fn check(&self) -> Result<RuleOutput, String>;
-    fn apply(&self) -> Result<bool, &str>;
-    fn verify(&self) -> Result<bool, &str>;
+    fn execute(&self) -> Result<bool, BGitError>;
+    fn check(&self) -> Result<RuleOutput, BGitError>;
+    fn apply(&self) -> Result<bool, BGitError>;
+    fn verify(&self) -> Result<bool, BGitError>;
 }
