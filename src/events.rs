@@ -1,4 +1,4 @@
-use crate::rules::BgitRule;
+use crate::bgit_error::BGitError;
 mod git_add;
 mod git_branch;
 mod git_checkout;
@@ -13,32 +13,14 @@ mod git_restore;
 mod git_status;
 
 /// List of various Git Events to be called with git2-rs library
-pub enum GitEvent {
-    Init,
-    Add,
-    Commit,
-    Push,
-    Pull,
-    Rebase,
-    Merge,
-    Log,
-    Status
-}
-/// Sample schema for an Events
-/// ```rs
-/// struct <event name> {
-///     name: String,
-///     action_description: String,
-///     id: u32,
-///     args: Vec<>
-/// }
-/// ```
-pub(crate) trait BgitEvent {
-    fn new(name: String, action_description: String, id: u32, args: Vec<&str>) -> Self where Self: Sized;
+pub(crate) trait AtomicEvent {
+    fn new(name: String, action_description: String) -> Self
+    where
+        Self: Sized;
     fn get_name(&self) -> String;
     fn get_action_description(&self) -> String;
-    fn get_id(&self) -> u32;
-    fn get_type(&self) -> Vec<GitEvent>;
-    fn get_rules(&self) -> Vec<Box<dyn BgitRule>>;
-    fn apply(&self) -> Result<bool, &str>;
+    fn check_rules(&self) -> Result<bool, BGitError>;
+    fn pre_execute_hook(&self) -> Result<bool, BGitError>;
+    // fn execute(&self) -> Result<bool, BGitError>;
+    fn post_execute_hook(&self) -> Result<bool, BGitError>;
 }

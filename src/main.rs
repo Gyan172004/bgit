@@ -10,7 +10,9 @@ use crate::cmd::log::log;
 mod rules;
 mod cmd;
 mod events;
-mod tasks;
+mod workflows;
+mod step;
+mod bgit_error;
 
 fn main() {
     let cli_instance = BgitCli::new();

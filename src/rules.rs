@@ -1,4 +1,4 @@
-use crate::events::BgitEvent;
+use crate::events::AtomicEvent;
 
 mod a11_git_remote_http_ssh;
 mod a03_github_username;
@@ -15,25 +15,25 @@ mod a13_git_lfs;
 mod a14_big_repo_size;
 mod a15_file_not_gitignored;
 
-pub enum BgitRuleLevel {
+pub enum RuleLevel {
     Allow,
     Warning,
     Error
 }
 
-pub enum BgitRuleOutput {
+pub enum RuleOutput {
     Allowed,
     Warning(String),
     Fine
 }
 
-pub trait BgitRule {
-    fn new(name: String, id: u32, level: BgitRuleLevel, events: Vec<Box<dyn BgitEvent>>) -> Self where Self: Sized;
+pub trait Rule {
+    fn new(name: String, id: u32, level: RuleLevel, events: Vec<Box<dyn AtomicEvent>>) -> Self where Self: Sized;
     fn get_name(&self) -> String;
     fn get_id(&self) -> u32;
-    fn get_level(&self) -> BgitRuleLevel;
-    fn get_event(&self) -> Vec<Box<dyn BgitEvent>>;
-    fn check(&self) -> Result<BgitRuleOutput, String>;
+    fn get_level(&self) -> RuleLevel;
+    fn get_event(&self) -> Vec<Box<dyn AtomicEvent>>;
+    fn check(&self) -> Result<RuleOutput, String>;
     fn apply(&self) -> Result<bool, &str>;
     fn verify(&self) -> Result<bool, &str>;
 }
