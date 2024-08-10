@@ -1,4 +1,4 @@
-use crate::{bgit_error::BGitError, rules::Rule};
+use crate::{bgit_error::{BGitError, NO_RULE, NO_STEP}, rules::Rule};
 pub(crate) mod git_add;
 mod git_branch;
 mod git_checkout;
@@ -40,26 +40,50 @@ pub(crate) trait AtomicEvent {
             let rule_passed = rule.execute()?;
             if !rule_passed {
                 return Err(BGitError::new(
-                    rule.get_name(),
+                    "Pre-check Rule failed",
                     rule.get_description(),
-                    "blah",
-                    "blah",
+                    "AtomicEvent",
+                    NO_STEP,
+                    self.get_name(),
+                    rule.get_name(),
                 ));
             }
         }
-        let pre_commit_hook_status = self.pre_execute_hook()?;
-        if !pre_commit_hook_status {
-            return Err(BGitError::new("pre hook failed", "blah", "blah", "blah"));
+        let pre_event_hook_status = self.pre_execute_hook()?;
+        if !pre_event_hook_status {
+            return Err(BGitError::new(
+                "Pre-event hook failed",
+                "Pre-event hook failed!",
+                "AtomicEvent",
+                NO_STEP,
+                self.get_name(),
+                NO_RULE,
+            ));
         }
 
         let raw_executor_status = self.raw_execute()?;
         if !raw_executor_status {
-            return Err(BGitError::new("raw_execute failed", "blah", "blah", "blah"));
+            return Err(BGitError::new(
+                "Raw executor failed",
+                "Raw executor failed!",
+                "RawExecutor",
+                NO_STEP,
+                self.get_name(),
+                NO_RULE,
+            
+            ));
         }
 
-        let post_commit_hook_status = self.post_execute_hook()?;
-        if !post_commit_hook_status {
-            return Err(BGitError::new("pre hook failed", "blah", "blah", "blah"));
+        let post_event_hook_status = self.post_execute_hook()?;
+        if !post_event_hook_status {
+            return Err(BGitError::new(
+                "Post-event hook failed",
+                "Post-event hook failed!",
+                "AtomicEvent",
+                NO_STEP,
+                self.get_name(),
+                NO_RULE,
+            ));
         }
         Ok(true)
     }

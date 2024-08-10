@@ -1,5 +1,4 @@
-
-use crate::bgit_error::BGitError;
+use crate::bgit_error::{BGitError, NO_EVENT, NO_RULE, NO_STEP};
 use crate::step::Step;
 use crate::step::Task::{ActionStepTask, PromptStepTask};
 
@@ -26,10 +25,12 @@ impl WorkflowQueue {
             while next_step != Step::Stop {
                 if let Step::Start(_) = next_step {
                     return Err(BGitError::new(
-                        "start step occured in between of workflow",
-                        "lal",
-                        "idk",
-                        "won't tell",
+                        "next_step must not be a Start Task!", 
+                        "next_step must not be a Start Task! This is a bug in the code",
+                        "WorkflowQueue",
+                        NO_STEP,
+                        NO_EVENT,
+                        NO_RULE
                     ));
                 }
 
@@ -45,14 +46,23 @@ impl WorkflowQueue {
             if next_step == Step::Stop {
                 Ok(true)
             } else {
-                Err(BGitError::new("stop not found!", "idk", "lmao", "roflmao"))
+                Err(BGitError::new(
+                    "final_step must be a Stop Task!",
+                    "final_step must be a Stop Task! This is a bug in the code",
+                    "WorkflowQueue",
+                    NO_STEP,
+                    NO_EVENT,
+                    NO_RULE
+                ))
             }
         } else {
             Err(BGitError::new(
                 "init_step must be a Start Task!",
-                "PARENT",
-                "Initialization",
-                "Blah blah",
+                "init_step must be a Start Task! This is a bug in the code",
+                "WorkflowQueue",
+                NO_STEP,
+                NO_EVENT,
+                NO_RULE
             ))
         }
     }
