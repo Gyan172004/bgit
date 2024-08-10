@@ -1,7 +1,8 @@
 use crate::{
     bgit_error::BGitError,
-    events::{git_add::GitAdd, AtomicEvent},
-    rules::{a01_git_install::IsGitInstalledLocally, Rule, RuleLevel},
+    common_store::{event_store::EVENT_GIT_ADD, rules_store::RULE_IS_GIT_INSTALLED_LOCALLY},
+    events::AtomicEvent,
+    rules::Rule,
     step::{ActionStep, Step},
 };
 use git2::Repository;
@@ -37,13 +38,8 @@ impl ActionStep for HasStash {
                 })
                 .is_ok();
 
-            let rule = IsGitInstalledLocally::new(
-                "IsGitInstalledLocally",
-                "Check if Git is installed",
-                RuleLevel::Error,
-            );
-            let mut git_add_event = GitAdd::new("git_add", "Add files to staging area");
-            git_add_event.add_pre_check_rule(Box::new(rule));
+            let mut git_add_event = EVENT_GIT_ADD.copy_struct();
+            git_add_event.add_pre_check_rule(Box::new(RULE_IS_GIT_INSTALLED_LOCALLY.copy_struct()));
             git_add_event.execute()?;
 
             if has_stash {

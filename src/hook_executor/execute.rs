@@ -44,20 +44,16 @@ pub(crate) fn execute_hook_util(
         // Stream stdout
         let stdout_handle = thread::spawn(move || {
             let reader = BufReader::new(stdout);
-            for line in reader.lines() {
-                if let Ok(line_unwrap) = line {
-                    println!("{}", line_unwrap);
-                }
+            for line in reader.lines().map_while(Result::ok) {
+                println!("{}", line);
             }
         });
 
         // Stream stderr
         let stderr_handle = thread::spawn(move || {
             let reader = BufReader::new(stderr);
-            for line in reader.lines() {
-                if let Ok(line_unwrap) = line {
-                    eprintln!("{}", line_unwrap);
-                }
+            for line in reader.lines().map_while(Result::ok) {
+                eprintln!("{}", line);
             }
         });
 

@@ -5,7 +5,7 @@ use super::AtomicEvent;
 pub(crate) struct GitAdd {
     name: String,
     action_description: String,
-    pre_check_rules: Vec<Box<dyn Rule>>,
+    pre_check_rules: Vec<Box<dyn Rule + Send + Sync>>,
 }
 
 impl AtomicEvent for GitAdd {
@@ -28,11 +28,11 @@ impl AtomicEvent for GitAdd {
         &self.action_description
     }
 
-    fn add_pre_check_rule(&mut self, rule: Box<dyn Rule>) {
+    fn add_pre_check_rule(&mut self, rule: Box<dyn Rule + Send + Sync>) {
         self.pre_check_rules.push(rule);
     }
 
-    fn get_pre_check_rule(&self) -> &Vec<Box<dyn Rule>> {
+    fn get_pre_check_rule(&self) -> &Vec<Box<dyn Rule + Send + Sync>> {
         &self.pre_check_rules
     }
 

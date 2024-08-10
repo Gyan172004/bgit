@@ -7,6 +7,7 @@ use crate::cmd::{Cli, Commands};
 
 mod bgit_error;
 mod cmd;
+mod common_store;
 mod events;
 mod hook_executor;
 mod rules;

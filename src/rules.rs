@@ -99,4 +99,11 @@ pub(crate) trait Rule {
             RuleOutput::Exception(_) => Ok(false),
         }
     }
+
+    fn copy_struct(&self) -> Self
+    where
+        Self: Sized,
+    {
+        Self::new(self.get_name(), self.get_description(), self.get_level())
+    }
 }

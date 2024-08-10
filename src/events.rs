@@ -23,7 +23,7 @@ mod git_status;
 /// struct GitAdd {
 ///     name: String,
 ///     action_description: String,
-///     pre_check_rules: Vec<Box<dyn Rule>>
+///     pre_check_rules: Vec<Box<dyn Rule + Send + Sync>>
 /// }
 /// List of various Git Events to be called with git2-rs library
 pub(crate) trait AtomicEvent {
@@ -32,8 +32,8 @@ pub(crate) trait AtomicEvent {
         Self: Sized;
     fn get_name(&self) -> &str;
     fn get_action_description(&self) -> &str;
-    fn add_pre_check_rule(&mut self, rule: Box<dyn Rule>);
-    fn get_pre_check_rule(&self) -> &Vec<Box<dyn Rule>>;
+    fn add_pre_check_rule(&mut self, rule: Box<dyn Rule + Send + Sync>);
+    fn get_pre_check_rule(&self) -> &Vec<Box<dyn Rule + Send + Sync>>;
     // Plain execute the event, without any checks and hook
     fn raw_execute(&self) -> Result<bool, Box<BGitError>>;
 
@@ -133,5 +133,12 @@ pub(crate) trait AtomicEvent {
             )));
         }
         Ok(true)
+    }
+
+    fn copy_struct(&self) -> Self
+    where
+        Self: Sized,
+    {
+        Self::new(self.get_name(), self.get_action_description())
     }
 }
