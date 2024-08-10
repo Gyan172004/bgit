@@ -1,3 +1,5 @@
+use crate::bgit_error::BGitError;
+
 #[derive(PartialEq)]
 pub(crate) enum Step {
     Start(Task),
@@ -22,7 +24,7 @@ pub(crate) trait ActionStep {
     where
         Self: Sized;
     fn get_name(&self) -> &str;
-    fn execute(&self) -> Step;
+    fn execute(&self) -> Result<Step, Box<BGitError>>;
 }
 
 pub(crate) trait PromptStep {
@@ -30,5 +32,5 @@ pub(crate) trait PromptStep {
     where
         Self: Sized;
     fn get_name(&self) -> &str;
-    fn execute(&self) -> Step;
+    fn execute(&self) -> Result<Step, Box<BGitError>>;
 }

@@ -8,10 +8,11 @@ use crate::cmd::{Cli, Commands};
 mod bgit_error;
 mod cmd;
 mod events;
+mod hook_executor;
 mod rules;
 mod step;
-mod workflows;
 mod workflow_queue;
+mod workflows;
 
 fn main() {
     let cli_instance_wrap = Cli::new();

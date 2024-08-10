@@ -1,4 +1,7 @@
-use crate::step::{PromptStep, Step};
+use crate::{
+    bgit_error::BGitError,
+    step::{PromptStep, Step},
+};
 use dialoguer::{theme::ColorfulTheme, Confirm};
 
 pub(crate) struct AskToInitGit {
@@ -18,7 +21,7 @@ impl PromptStep for AskToInitGit {
         &self.name
     }
 
-    fn execute(&self) -> Step {
+    fn execute(&self) -> Result<Step, Box<BGitError>> {
         let confirmation = Confirm::with_theme(&ColorfulTheme::default())
             .with_prompt("Do you want to initialize git repository?")
             .default(false)
@@ -29,6 +32,6 @@ impl PromptStep for AskToInitGit {
 
         println!("Confirmation: {}", confirmation);
 
-        Step::Stop
+        Ok(Step::Stop)
     }
 }

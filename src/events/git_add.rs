@@ -2,7 +2,7 @@ use crate::{bgit_error::BGitError, rules::Rule};
 
 use super::AtomicEvent;
 
-struct GitAdd {
+pub(crate) struct GitAdd {
     name: String,
     action_description: String,
     pre_check_rules: Vec<Box<dyn Rule>>,
@@ -27,7 +27,7 @@ impl AtomicEvent for GitAdd {
     fn get_action_description(&self) -> &str {
         &self.action_description
     }
-    
+
     fn add_pre_check_rule(&mut self, rule: Box<dyn Rule>) {
         self.pre_check_rules.push(rule);
     }
@@ -35,20 +35,9 @@ impl AtomicEvent for GitAdd {
     fn get_pre_check_rule(&self) -> &Vec<Box<dyn Rule>> {
         &self.pre_check_rules
     }
-    
-    fn check_rules(&self) -> Result<bool, crate::bgit_error::BGitError> {
-        Ok(true)
-    }
 
-    fn pre_execute_hook(&self) -> Result<bool, crate::bgit_error::BGitError> {
-        Ok(true)
-    }
-
-    fn post_execute_hook(&self) -> Result<bool, crate::bgit_error::BGitError> {
-        Ok(true)
-    }
-
-    fn raw_execute(&self) -> Result<bool, BGitError> {
+    fn raw_execute(&self) -> Result<bool, Box<BGitError>> {
+        println!("Executing raw_execute for GitAdd");
         Ok(true)
     }
 }

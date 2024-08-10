@@ -1,4 +1,10 @@
-use crate::step::{ActionStep, PromptStep, Step, Task::{ActionStepTask, PromptStepTask}};
+use crate::{
+    bgit_error::BGitError,
+    step::{
+        ActionStep, PromptStep, Step,
+        Task::{ActionStepTask, PromptStepTask},
+    },
+};
 use git2::Repository;
 use std::env;
 
@@ -21,13 +27,16 @@ impl ActionStep for IsGitRepo {
         &self.name
     }
 
-    fn execute(&self) -> Step {
+    fn execute(&self) -> Result<Step, Box<BGitError>> {
         let cwd = env::current_dir().expect("Failed to get current directory");
         if Repository::discover(cwd).is_ok() {
-           Step::Task(ActionStepTask(Box::new(HasStash::new("has stash")))) 
-        }
-        else {
-            Step::Task(PromptStepTask(Box::new(AskToInitGit::new("ask to init git"))))
+            Ok(Step::Task(ActionStepTask(Box::new(HasStash::new(
+                "has stash",
+            )))))
+        } else {
+            Ok(Step::Task(PromptStepTask(Box::new(AskToInitGit::new(
+                "ask to init git",
+            )))))
         }
     }
 }

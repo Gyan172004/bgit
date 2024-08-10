@@ -5,7 +5,7 @@ pub(crate) struct BGitError {
     workflow_name: String,
     step_name: String,
     event_name: String,
-    rule_name: String
+    rule_name: String,
 }
 
 pub(crate) const EMPTY_STRING: &str = "";
