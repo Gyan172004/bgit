@@ -39,11 +39,11 @@ pub(crate) trait AtomicEvent {
 
     // Hooks
     fn pre_execute_hook(&self) -> Result<bool, Box<BGitError>> {
-        let pre_event_hook_file_name: String = format!("pre-{}", self.get_name());
+        let pre_event_hook_file_name: String = format!("pre_{}", self.get_name());
         self.execute_hook(&pre_event_hook_file_name)
     }
     fn post_execute_hook(&self) -> Result<bool, Box<BGitError>> {
-        let post_event_hook_file_name: String = format!("post-{}", self.get_name());
+        let post_event_hook_file_name: String = format!("post_{}", self.get_name());
         self.execute_hook(&post_event_hook_file_name)
     }
     /// Run hooks inside `{RepositoryBase}/.bgit/hooks/[pre|post]-{hook_name}`
