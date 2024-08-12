@@ -26,7 +26,7 @@ impl WorkflowQueue {
             let started = Instant::now();
             // Initialize spinner for progress indication
             let pb = ProgressBar::new_spinner();
-            pb.enable_steady_tick(Duration::from_millis(500));
+            pb.enable_steady_tick(Duration::from_millis(200));
             pb.set_style(
                 ProgressStyle::with_template(
                     "{spinner:.cyan/blue.bold} [{pos:.yellow}/?] Executing step: {wide_msg:.green}",
