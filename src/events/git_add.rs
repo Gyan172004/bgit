@@ -37,7 +37,6 @@ impl AtomicEvent for GitAdd {
     }
 
     fn raw_execute(&self) -> Result<bool, Box<BGitError>> {
-        println!("Executing raw_execute for GitAdd");
         Ok(true)
     }
 }

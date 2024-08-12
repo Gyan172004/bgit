@@ -9,6 +9,8 @@ pub(crate) fn default_cmd_workflow() {
             TASK_IS_GIT_REPO.copy_struct(),
         ))),
     );
-    let result = workflow_queue.execute().unwrap();
-    println!("Ran {}", result);
+    match workflow_queue.execute() {
+        Ok(_) => {},
+        Err(err) => eprintln!("Error : {:#?}", err),
+    };
 }

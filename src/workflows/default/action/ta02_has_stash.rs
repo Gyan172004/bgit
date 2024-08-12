@@ -43,10 +43,8 @@ impl ActionStep for HasStash {
             git_add_event.execute()?;
 
             if has_stash {
-                println!("You have stash(es) in your repository");
                 Ok(Step::Stop)
             } else {
-                println!("You don't have any stash in your repository");
                 Ok(Step::Stop)
             }
         } else {

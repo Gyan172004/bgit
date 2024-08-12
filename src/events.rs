@@ -1,5 +1,6 @@
 use git2::Repository;
 use std::env;
+use colored::Colorize;
 
 use crate::{
     bgit_error::{BGitError, NO_RULE, NO_STEP},
@@ -18,6 +19,8 @@ mod git_pull;
 mod git_push;
 mod git_restore;
 mod git_status;
+
+const PENGUIN_EMOJI: &str = "🐧";
 
 /// Sample struct
 /// struct GitAdd {
@@ -39,10 +42,12 @@ pub(crate) trait AtomicEvent {
 
     // Hooks
     fn pre_execute_hook(&self) -> Result<bool, Box<BGitError>> {
+        eprintln!("{} Running pre-execute hook for {}", PENGUIN_EMOJI, self.get_name().cyan().bold());
         let pre_event_hook_file_name: String = format!("pre_{}", self.get_name());
         self.execute_hook(&pre_event_hook_file_name)
     }
     fn post_execute_hook(&self) -> Result<bool, Box<BGitError>> {
+        eprintln!("{} Running post-execute hook for {}", PENGUIN_EMOJI, self.get_name().cyan().bold());
         let post_event_hook_file_name: String = format!("post_{}", self.get_name());
         self.execute_hook(&post_event_hook_file_name)
     }
@@ -76,6 +81,7 @@ pub(crate) trait AtomicEvent {
 
     // Check against set of rules before running the event
     fn check_rules(&self) -> Result<bool, Box<BGitError>> {
+        eprintln!("{} Running pre-check rules for {}", PENGUIN_EMOJI, self.get_name().cyan().bold());
         for rule in self.get_pre_check_rule().iter() {
             let rule_passed = rule.execute()?;
             if !rule_passed {
@@ -93,6 +99,7 @@ pub(crate) trait AtomicEvent {
     }
 
     fn execute(&self) -> Result<bool, Box<BGitError>> {
+        eprintln!("Running event: {}", self.get_name());
         let rule_check_status = self.check_rules()?;
         if !rule_check_status {
             return Ok(false);
@@ -108,7 +115,8 @@ pub(crate) trait AtomicEvent {
                 NO_RULE,
             )));
         }
-
+        
+        eprintln!("{} Running executor for event {}", PENGUIN_EMOJI, self.get_name().cyan().bold());
         let raw_executor_status = self.raw_execute()?;
         if !raw_executor_status {
             return Err(Box::new(BGitError::new(
