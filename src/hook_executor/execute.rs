@@ -1,6 +1,5 @@
 use crate::bgit_error::{BGitError, NO_RULE, NO_STEP};
 use std::fs;
-use std::os::unix::fs::PermissionsExt;
 use std::path::Path;
 use std::process::{Command, Stdio};
 use std::{
@@ -8,15 +7,25 @@ use std::{
     thread,
 };
 
+#[cfg(unix)]
+use std::os::unix::fs::PermissionsExt;
+
+
+#[cfg(not(unix))]
+pub(crate) fn execute_hook_util(
+    pre_event_hook_path: &Path,
+    event_name: &str,
+) -> Result<bool, Box<BGitError>> {
+    unimplemented!("Windows is not supported yet"); // TODO: Implement for Windows
+}
+
+#[cfg(unix)]
 pub(crate) fn execute_hook_util(
     pre_event_hook_path: &Path,
     event_name: &str,
 ) -> Result<bool, Box<BGitError>> {
     if pre_event_hook_path.exists() {
         let pre_event_hook_path_str = pre_event_hook_path.to_str().unwrap();
-
-        #[cfg(windows)]
-        unimplemented!("Windows is not supported yet"); // TODO: Implement for Windows
 
         let metdata = fs::metadata(pre_event_hook_path).expect("Failed to get hook file metadata!");
         let mut permissions = metdata.permissions();
