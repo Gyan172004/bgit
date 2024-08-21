@@ -1,6 +1,6 @@
 use crate::bgit_error::{BGitError, NO_EVENT, NO_RULE, NO_STEP};
-use crate::step::Step;
 use crate::step::Task::{ActionStepTask, PromptStepTask};
+use crate::step::{Step, Task};
 use colored::Colorize;
 use indicatif::{HumanDuration, ProgressBar, ProgressStyle};
 use std::time::Duration;
@@ -11,62 +11,76 @@ const HATCHING_CHICK_EMOJI: &str = "🐣";
 pub(crate) struct WorkflowQueue {
     name: String,
     init_step: Step,
+    pb: ProgressBar,
 }
 
 impl WorkflowQueue {
     pub(crate) fn new(name: &str, init_step: Step) -> Self {
+        // Initialize spinner for progress indication
+        let pb = ProgressBar::new_spinner();
+        pb.enable_steady_tick(Duration::from_millis(200));
+        pb.set_style(
+            ProgressStyle::with_template(
+                "{spinner:.cyan/blue.bold} [{pos:.yellow}/?] Executing step: {wide_msg:.green}",
+            )
+            .unwrap(),
+        );
+
         WorkflowQueue {
             name: name.to_owned(),
             init_step,
+            pb,
+        }
+    }
+
+    fn run_step_and_traverse(&self, task: &Task) -> Result<Step, Box<BGitError>> {
+        match task {
+            ActionStepTask(action_step_task) => {
+                eprintln!(
+                    "{} Running Action Step: {}",
+                    HATCHING_CHICK_EMOJI,
+                    action_step_task.get_name().cyan().bold()
+                );
+                self.pb.set_message(format!(
+                    "Step '{}' in progress...",
+                    action_step_task.get_name().bold()
+                ));
+                let action_step_result = action_step_task.execute()?;
+
+                self.pb.inc(1);
+                self.pb.tick();
+
+                Ok(action_step_result)
+            }
+            PromptStepTask(prompt_step_task) => {
+                self.pb.disable_steady_tick();
+                eprintln!(
+                    "{} Running Prompt Step: {}",
+                    HATCHING_CHICK_EMOJI,
+                    prompt_step_task.get_name().cyan().bold()
+                );
+
+                self.pb.set_message(format!(
+                    "Step '{}' in progress...",
+                    prompt_step_task.get_name().bold()
+                ));
+                let prompt_step_result = prompt_step_task.execute()?;
+                self.pb.enable_steady_tick(Duration::from_millis(200));
+
+                self.pb.inc(1);
+                self.pb.tick();
+
+                Ok(prompt_step_result)
+            }
         }
     }
 
     pub(crate) fn execute(&self) -> Result<bool, Box<BGitError>> {
         if let Step::Start(task) = &self.init_step {
             let started = Instant::now();
-            // Initialize spinner for progress indication
-            let pb = ProgressBar::new_spinner();
-            pb.enable_steady_tick(Duration::from_millis(200));
-            pb.set_style(
-                ProgressStyle::with_template(
-                    "{spinner:.cyan/blue.bold} [{pos:.yellow}/?] Executing step: {wide_msg:.green}",
-                )
-                .unwrap(),
-            );
 
-            pb.inc(1);
-            pb.tick();
+            let mut next_step: Step = self.run_step_and_traverse(task)?;
 
-            let mut next_step: Step = match task {
-                ActionStepTask(action_step_task) => {
-                    eprintln!(
-                        "{} Running Action Step: {}",
-                        HATCHING_CHICK_EMOJI,
-                        action_step_task.get_name().cyan().bold()
-                    );
-                    pb.set_message(format!(
-                        "Step '{}' in progress...",
-                        action_step_task.get_name().bold()
-                    ));
-                    action_step_task.execute()?
-                }
-                PromptStepTask(prompt_step_task) => {
-                    eprintln!(
-                        "{} Running Prompt Step: {}",
-                        HATCHING_CHICK_EMOJI,
-                        prompt_step_task.get_name().cyan().bold()
-                    );
-
-                    pb.set_message(format!(
-                        "Step '{}' in progress...",
-                        prompt_step_task.get_name().bold()
-                    ));
-                    prompt_step_task.execute()?
-                }
-            };
-
-            pb.inc(1);
-            pb.tick();
             while next_step != Step::Stop {
                 if let Step::Start(_) = next_step {
                     return Err(Box::new(BGitError::new(
@@ -80,43 +94,13 @@ impl WorkflowQueue {
                 }
 
                 if let Step::Task(task) = next_step {
-                    next_step = match task {
-                        ActionStepTask(action_step_task) => {
-                            eprintln!(
-                                "{} Running Action Step: {}",
-                                HATCHING_CHICK_EMOJI,
-                                action_step_task.get_name().cyan().bold()
-                            );
-
-                            pb.set_message(format!(
-                                "Step '{}' in progress...",
-                                action_step_task.get_name().bold()
-                            ));
-                            action_step_task.execute()?
-                        }
-                        PromptStepTask(prompt_step_task) => {
-                            eprintln!(
-                                "{} Running Prompt Task: {}",
-                                HATCHING_CHICK_EMOJI,
-                                prompt_step_task.get_name().cyan().bold()
-                            );
-
-                            pb.set_message(format!(
-                                "Step '{}' in progress...",
-                                prompt_step_task.get_name().bold()
-                            ));
-                            prompt_step_task.execute()?
-                        }
-                    }
+                    next_step = self.run_step_and_traverse(&task)?;
                 } else {
                     unreachable!("This code is unreachable")
                 }
-
-                pb.inc(1);
-                pb.tick();
             }
 
-            pb.finish_with_message("Workflow complete");
+            self.pb.finish_with_message("Workflow complete");
 
             if next_step == Step::Stop {
                 println!("Done in {}", HumanDuration(started.elapsed()));

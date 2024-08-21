@@ -10,7 +10,6 @@ use std::{
 #[cfg(unix)]
 use std::os::unix::fs::PermissionsExt;
 
-
 #[cfg(not(unix))]
 pub(crate) fn execute_hook_util(
     pre_event_hook_path: &Path,
