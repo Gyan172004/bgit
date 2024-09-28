@@ -2,7 +2,7 @@ use crate::{bgit_error::BGitError, rules::Rule};
 
 use super::AtomicEvent;
 
-pub(crate) struct GitAdd {
+pub(crate) struct GitAdd {  
     name: String,
     action_description: String,
     pre_check_rules: Vec<Box<dyn Rule + Send + Sync>>,

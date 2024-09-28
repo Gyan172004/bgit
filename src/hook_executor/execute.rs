@@ -12,11 +12,14 @@ use std::os::unix::fs::PermissionsExt;
 
 
 #[cfg(not(unix))]
+#[allow(unused_variables)]
 pub(crate) fn execute_hook_util(
     pre_event_hook_path: &Path,
     event_name: &str,
 ) -> Result<bool, Box<BGitError>> {
-    unimplemented!("Windows is not supported yet"); // TODO: Implement for Windows
+    eprintln!("TODO: Add SUPPORT is not supported yet!");
+    return Ok(true);
+    todo!("Windows is not supported yet"); // TODO: Implement for Windows
 }
 
 #[cfg(unix)]
