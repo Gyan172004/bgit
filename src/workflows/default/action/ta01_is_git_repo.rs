@@ -1,6 +1,6 @@
 use crate::{
     bgit_error::BGitError,
-    common_store::worflow_store::{TASK_ASK_TO_INIT_GIT, TASK_HAS_STASH},
+    common_store::workflow_store::{TASK_ASK_TO_INIT_GIT, TASK_HAS_STASH},
     step::{
         ActionStep, PromptStep, Step,
         Task::{ActionStepTask, PromptStepTask},
