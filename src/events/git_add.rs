@@ -1,9 +1,7 @@
+use super::AtomicEvent;
 use crate::{bgit_error::BGitError, rules::Rule};
 use git2::{IndexAddOption, Repository};
 use std::path::Path;
-use std::process::Command;
-
-use super::AtomicEvent;
 
 pub(crate) struct GitAdd {
     name: String,
@@ -66,7 +64,7 @@ impl AtomicEvent for GitAdd {
 
         // Using ["."], which indicates the current directory recursively.
         index
-            .add_all(&["."], IndexAddOption::DEFAULT, None)
+            .add_all(["."], IndexAddOption::DEFAULT, None)
             .map_err(|e| {
                 Box::new(BGitError::new(
                     "BGitError",
