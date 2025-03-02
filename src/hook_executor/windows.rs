@@ -85,15 +85,16 @@ fn create_command_for_hook(hook_path: &Path) -> Option<Command> {
     match extension {
         "ps1" => {
             let mut cmd = Command::new("powershell");
-            cmd.args(&["-ExecutionPolicy", "Bypass", "-File", hook_path.to_str()?]);
+            cmd.args(["-ExecutionPolicy", "Bypass", "-File", hook_path.to_str()?]);
             Some(cmd)
         }
         "bat" | "cmd" => {
             let mut cmd = Command::new("cmd");
-            cmd.args(&["/C", hook_path.to_str()?]);
+            cmd.args(["/C", hook_path.to_str()?]);
             Some(cmd)
         }
-        "exe" | _ => Some(Command::new(hook_path)),
+        "exe" => Some(Command::new(hook_path)),
+        _ => Some(Command::new(hook_path)),
     }
 }
 
@@ -154,7 +155,7 @@ pub fn execute_hook_util(
                 None => {
                     // Last resort: try cmd.exe
                     let mut cmd = Command::new("cmd");
-                    cmd.args(&[
+                    cmd.args([
                         "/C",
                         pre_event_hook_path.to_str().ok_or_else(|| {
                             create_hook_error(
