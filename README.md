@@ -1,5 +1,10 @@
 # bgit: One command for most of git
 
+![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/Gyan172004/bgit/general.yml?style=for-the-badge&logo=github&logoColor=D9E0EE&labelColor=292324)
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Gyan172004/bgit/audit.yml?label=audit&style=for-the-badge&logo=github&logoColor=D9E0EE&labelColor=292324)
+[![Codecov](https://img.shields.io/codecov/c/github/Gyan172004/bgit?label=Coverage&style=for-the-badge&logo=codecov&logoColor=D9E0EE&labelColor=292324)](https://codecov.io/gh/Gyan172004/bgit)
+![GitHub License](https://img.shields.io/github/license/Gyan172004/bgit?label=License&style=for-the-badge&logo=github&logoColor=D9E0EE&labelColor=292324)
+
 bgit is a simplified wrapper for Git, designed specifically for absolute beginners who find the Git workflow daunting. It automates common Git tasks such as adding, committing, and pushing changes, while also incorporating smart rules to prevent common issues like accidentally adding sensitive files or directories such as `.env` or `node_modules`.
 
 ## Features
