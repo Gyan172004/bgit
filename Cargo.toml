@@ -7,7 +7,7 @@ authors = ["Gyan172004 <gkoncs@gmail.com>", "rootCircle <dev.frolics@gmail.com>"
 repository = "https://github.com/Gyan172004/bgit"
 description = "User-friendly Git wrapper for beginners, automating essential tasks like adding, committing, and pushing changes. It includes smart rules to avoid common pitfalls, such as accidentally adding sensitive files or directories and has exclusive support for portable hooks!"
 categories = ["development-tools::testing", "command-line-utilities", "development-tools"]
-keywords = ["git", "cli", "wrapper", "beginner", "friendly", "portable", "libgit-rs", "hooks", "automation", "smart-rules"]
+keywords = ["git", "beginner-friendly", "libgit-rs", "hooks", "smart-rules"]
 rust-version = "1.85"
 
 [dependencies]
