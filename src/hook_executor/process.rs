@@ -20,7 +20,7 @@ pub fn handle_process_output(child: &mut process::Child) -> Result<(), Box<BGitE
     // Stream stdout
     let stdout_thread = thread::spawn(move || {
         let reader = BufReader::new(stdout);
-        for line in reader.lines().filter_map(Result::ok) {
+        for line in reader.lines().map_while(Result::ok) {
             println!("{}", line);
         }
     });
@@ -28,7 +28,7 @@ pub fn handle_process_output(child: &mut process::Child) -> Result<(), Box<BGitE
     // Stream stderr
     let stderr_thread = thread::spawn(move || {
         let reader = BufReader::new(stderr);
-        for line in reader.lines().filter_map(Result::ok) {
+        for line in reader.lines().map_while(Result::ok) {
             eprintln!("{}", line);
         }
     });

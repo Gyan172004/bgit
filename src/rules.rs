@@ -38,7 +38,6 @@ pub(crate) enum RuleOutput {
 ///     description: String,
 ///     level: RuleLevel
 /// }
-
 pub(crate) trait Rule {
     fn new(name: &str, description: &str, level: RuleLevel) -> Self
     where

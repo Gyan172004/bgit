@@ -42,11 +42,12 @@ impl ActionStep for HasStash {
             git_add_event.add_pre_check_rule(Box::new(RULE_IS_GIT_INSTALLED_LOCALLY.copy_struct()));
             git_add_event.execute()?;
 
-            if has_stash {
-                Ok(Step::Stop)
-            } else {
-                Ok(Step::Stop)
-            }
+            Ok(Step::Stop)
+            // if has_stash {
+            //     Ok(Step::Stop)
+            // } else {
+            //     Ok(Step::Stop)
+            // }
         } else {
             Ok(Step::Stop)
         }

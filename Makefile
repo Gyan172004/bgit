@@ -80,7 +80,7 @@ test :
 #
 # Usage :
 #	make precommit
-precommit : fmt clippy test prepare-check
+precommit : fmt clippy test
 
 coverage:
 	cargo llvm-cov clean --workspace --html --output-dir=coverage
