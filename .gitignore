@@ -1,3 +1,7 @@
 /target
 /.vscode/
 /.idea/
+
+# Code coverage
+lcov.info
+/coverage

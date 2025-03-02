@@ -55,16 +55,14 @@ impl Rule for IsGitInstalledLocally {
             .output();
 
         match output {
-            Err(e) => {
-                return Err(Box::new(BGitError::new(
-                    "Failed to execute command",
-                    &e.to_string(),
-                    "IsGitInstalledLocally",
-                    NO_STEP,
-                    NO_EVENT,
-                    self.get_name(),
-                )));
-            }
+            Err(e) => Err(Box::new(BGitError::new(
+                "Failed to execute command",
+                &e.to_string(),
+                "IsGitInstalledLocally",
+                NO_STEP,
+                NO_EVENT,
+                self.get_name(),
+            ))),
             Ok(output_response) => {
                 if output_response.status.success() {
                     Ok(true)

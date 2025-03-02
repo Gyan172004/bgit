@@ -8,16 +8,14 @@ use super::error::create_hook_error;
 /// Handles the stdout and stderr of a child process
 pub fn handle_process_output(child: &mut process::Child) -> Result<(), Box<BGitError>> {
     // Take ownership of stdout and stderr
-    let stdout = child.stdout.take().ok_or_else(|| create_hook_error(
-        "Failed to capture stdout",
-        "",
-        "hook execution"
-    ))?;
-    let stderr = child.stderr.take().ok_or_else(|| create_hook_error(
-        "Failed to capture stderr",
-        "",
-        "hook execution"
-    ))?;
+    let stdout = child
+        .stdout
+        .take()
+        .ok_or_else(|| create_hook_error("Failed to capture stdout", "", "hook execution"))?;
+    let stderr = child
+        .stderr
+        .take()
+        .ok_or_else(|| create_hook_error("Failed to capture stderr", "", "hook execution"))?;
 
     // Stream stdout
     let stdout_thread = thread::spawn(move || {
@@ -36,16 +34,12 @@ pub fn handle_process_output(child: &mut process::Child) -> Result<(), Box<BGitE
     });
 
     // Wait for the streaming threads to finish
-    stdout_thread.join().map_err(|_| create_hook_error(
-        "Failed to join stdout thread",
-        "",
-        "hook execution"
-    ))?;
-    stderr_thread.join().map_err(|_| create_hook_error(
-        "Failed to join stderr thread",
-        "",
-        "hook execution"
-    ))?;
+    stdout_thread
+        .join()
+        .map_err(|_| create_hook_error("Failed to join stdout thread", "", "hook execution"))?;
+    stderr_thread
+        .join()
+        .map_err(|_| create_hook_error("Failed to join stderr thread", "", "hook execution"))?;
 
     Ok(())
 }

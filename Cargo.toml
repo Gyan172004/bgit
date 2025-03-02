@@ -8,15 +8,15 @@ repository = "https://github.com/Gyan172004/bgit"
 description = "User-friendly Git wrapper for beginners, automating essential tasks like adding, committing, and pushing changes. It includes smart rules to avoid common pitfalls, such as accidentally adding sensitive files or directories and has exclusive support for portable hooks!"
 categories = ["development-tools::testing", "command-line-utilities", "development-tools"]
 keywords = ["git", "cli", "wrapper", "beginner", "friendly", "portable", "libgit-rs", "hooks", "automation", "smart-rules"]
-rust-version = "1.80"
+rust-version = "1.85"
 
 [dependencies]
-clap = { version = "4.5.15", features = ["derive"] }
-clap_complete = "4.5.14"
-colored = "2.1.0"
+clap = { version = "4.5.31", features = ["derive"] }
+clap_complete = "4.5.46"
+colored = "3.0.0"
 dialoguer = "0.11.0"
-git2 = "0.19.0"
-indicatif = "0.17.8"
+git2 = "0.20.0"
+indicatif = "0.17.11"
 
 [profile.dev]
 opt-level = 0

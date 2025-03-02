@@ -76,54 +76,58 @@ impl WorkflowQueue {
     }
 
     pub(crate) fn execute(&self) -> Result<bool, Box<BGitError>> {
-        if let Step::Start(task) = &self.init_step {
-            let started = Instant::now();
+        match &self.init_step {
+            Step::Start(task) => {
+                let started = Instant::now();
 
-            let mut next_step: Step = self.run_step_and_traverse(task)?;
+                let mut next_step: Step = self.run_step_and_traverse(task)?;
 
-            while next_step != Step::Stop {
-                if let Step::Start(_) = next_step {
-                    return Err(Box::new(BGitError::new(
-                        "next_step must not be a Start Task!",
-                        "next_step must not be a Start Task! This is a bug in the code",
+                while next_step != Step::Stop {
+                    if let Step::Start(_) = next_step {
+                        return Err(Box::new(BGitError::new(
+                            "next_step must not be a Start Task!",
+                            "next_step must not be a Start Task! This is a bug in the code",
+                            "WorkflowQueue",
+                            NO_STEP,
+                            NO_EVENT,
+                            NO_RULE,
+                        )));
+                    }
+
+                    match next_step {
+                        Step::Task(task) => {
+                            next_step = self.run_step_and_traverse(&task)?;
+                        }
+                        _ => {
+                            unreachable!("This code is unreachable")
+                        }
+                    }
+                }
+
+                self.pb.finish_with_message("Workflow complete");
+
+                if next_step == Step::Stop {
+                    println!("Done in {}", HumanDuration(started.elapsed()));
+                    Ok(true)
+                } else {
+                    Err(Box::new(BGitError::new(
+                        "final_step must be a Stop Task!",
+                        "final_step must be a Stop Task! This is a bug in the code",
                         "WorkflowQueue",
                         NO_STEP,
                         NO_EVENT,
                         NO_RULE,
-                    )));
-                }
-
-                if let Step::Task(task) = next_step {
-                    next_step = self.run_step_and_traverse(&task)?;
-                } else {
-                    unreachable!("This code is unreachable")
+                    )))
                 }
             }
-
-            self.pb.finish_with_message("Workflow complete");
-
-            if next_step == Step::Stop {
-                println!("Done in {}", HumanDuration(started.elapsed()));
-                Ok(true)
-            } else {
-                Err(Box::new(BGitError::new(
-                    "final_step must be a Stop Task!",
-                    "final_step must be a Stop Task! This is a bug in the code",
-                    "WorkflowQueue",
-                    NO_STEP,
-                    NO_EVENT,
-                    NO_RULE,
-                )))
-            }
-        } else {
-            Err(Box::new(BGitError::new(
+            _ => Err(Box::new(BGitError::new(
                 "init_step must be a Start Task!",
                 "init_step must be a Start Task! This is a bug in the code",
                 "WorkflowQueue",
                 NO_STEP,
                 NO_EVENT,
                 NO_RULE,
-            )))
+            ))),
         }
     }
 }
