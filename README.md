@@ -1,9 +1,22 @@
 # bgit: One command for most of git
 
+<div align="center">
+
+![GitHub repo size](https://img.shields.io/github/repo-size/Gyan172004/bgit?style=for-the-badge&logo=github&logoColor=D9E0EE&labelColor=292324)
 ![GitHub Workflow Status (with event)](https://img.shields.io/github/actions/workflow/status/Gyan172004/bgit/general.yml?style=for-the-badge&logo=github&logoColor=D9E0EE&labelColor=292324)
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/Gyan172004/bgit/audit.yml?label=audit&style=for-the-badge&logo=github&logoColor=D9E0EE&labelColor=292324)
-[![Codecov](https://img.shields.io/codecov/c/github/Gyan172004/bgit?label=Coverage&style=for-the-badge&logo=codecov&logoColor=D9E0EE&labelColor=292324)](https://codecov.io/gh/Gyan172004/bgit)
 ![GitHub License](https://img.shields.io/github/license/Gyan172004/bgit?label=License&style=for-the-badge&logo=github&logoColor=D9E0EE&labelColor=292324)
+
+[![Codecov](https://img.shields.io/codecov/c/github/Gyan172004/bgit?label=Coverage&style=for-the-badge&logo=codecov&logoColor=D9E0EE&labelColor=292324)](https://codecov.io/gh/Gyan172004/bgit)
+
+![Crates.io](https://img.shields.io/crates/v/bgit?style=for-the-badge&logo=rust&logoColor=D9E0EE&labelColor=292324)
+![Crates.io](https://img.shields.io/crates/d/bgit?style=for-the-badge&logo=rust&logoColor=D9E0EE&labelColor=292324)
+![Crates.io](https://img.shields.io/crates/l/bgit?style=for-the-badge&logo=rust&logoColor=D9E0EE&labelColor=292324)
+![docs.rs](https://img.shields.io/docsrs/bgit?style=for-the-badge&logo=rust&logoColor=D9E0EE&labelColor=292324)
+![Crates.io Size](https://img.shields.io/crates/size/bgit?style=for-the-badge&logo=rust&logoColor=D9E0EE&labelColor=292324)
+![Crates.io MSRV](https://img.shields.io/crates/msrv/bgit?style=for-the-badge&logo=rust&logoColor=D9E0EE&labelColor=292324)
+
+</div>
 
 bgit is a simplified wrapper for Git, designed specifically for absolute beginners who find the Git workflow daunting. It automates common Git tasks such as adding, committing, and pushing changes, while also incorporating smart rules to prevent common issues like accidentally adding sensitive files or directories such as `.env` or `node_modules`.
 
@@ -22,25 +35,11 @@ bgit is a simplified wrapper for Git, designed specifically for absolute beginne
 bgit is written in Rust, ensuring fast performance and reliability. To install bgit, follow these steps:
 
 1. Ensure you have Rust installed. You can install Rust using rustup by following the instructions on [rustup.rs](https://rustup.rs/).
-2. Clone the bgit repository from GitHub:
+2. Run
 
     ```bash
-    git clone https://github.com/Gyan172004/bgit.git
+    cargo install bgit
     ```
-
-3. Navigate to the bgit directory:
-
-    ```bash
-    cd bgit
-    ```
-
-4. Build bgit using Cargo:
-
-    ```bash
-    cargo build --release
-    ```
-
-5. Once built, you can find the bgit executable in the `target/release` directory. You can add this directory to your PATH or move the executable to a directory already in your PATH to use bgit globally.
 
 ## Getting Started
 
