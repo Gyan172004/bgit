@@ -4,7 +4,7 @@ use std::env;
 
 use crate::{
     bgit_error::{BGitError, NO_RULE, NO_STEP},
-    hook_executor::execute::execute_hook_util,
+    hook_executor::execute_hook_util,
     rules::Rule,
 };
 pub(crate) mod git_add;
