@@ -1,5 +1,8 @@
 use super::AtomicEvent;
-use crate::{bgit_error::BGitError, rules::Rule};
+use crate::{
+    bgit_error::{BGitError, BGitErrorWorkflowType, NO_EVENT, NO_RULE},
+    rules::Rule,
+};
 use git2::{IndexAddOption, Repository};
 use std::path::Path;
 
@@ -39,14 +42,14 @@ impl AtomicEvent for GitAdd {
 
     fn raw_execute(&self) -> Result<bool, Box<BGitError>> {
         // Open the repository at the current directory
-        let repo = Repository::open(Path::new(".")).map_err(|e| {
+        let repo = Repository::discover(Path::new(".")).map_err(|e| {
             Box::new(BGitError::new(
                 "BGitError",
                 &format!("Failed to open repository: {}", e),
-                "",
-                "",
-                "",
-                "",
+                BGitErrorWorkflowType::AtomicEvent,
+                NO_EVENT,
+                &self.name,
+                NO_RULE,
             ))
         })?;
 
@@ -55,10 +58,10 @@ impl AtomicEvent for GitAdd {
             Box::new(BGitError::new(
                 "BGitError",
                 &format!("Failed to get repository index: {}", e),
-                "",
-                "",
-                "",
-                "",
+                BGitErrorWorkflowType::AtomicEvent,
+                NO_EVENT,
+                &self.name,
+                NO_RULE,
             ))
         })?;
 
@@ -69,10 +72,10 @@ impl AtomicEvent for GitAdd {
                 Box::new(BGitError::new(
                     "BGitError",
                     &format!("Failed to add files to index: {}", e),
-                    "",
-                    "",
-                    "",
-                    "",
+                    BGitErrorWorkflowType::AtomicEvent,
+                    NO_EVENT,
+                    &self.name,
+                    NO_RULE,
                 ))
             })?;
 
@@ -81,10 +84,10 @@ impl AtomicEvent for GitAdd {
             Box::new(BGitError::new(
                 "BGitError",
                 &format!("Failed to write index: {}", e),
-                "",
-                "",
-                "",
-                "",
+                BGitErrorWorkflowType::AtomicEvent,
+                NO_EVENT,
+                &self.name,
+                NO_RULE,
             ))
         })?;
 
