@@ -1,6 +1,10 @@
-use crate::{bgit_error::BGitError, rules::Rule};
-
 use super::AtomicEvent;
+use crate::{
+    bgit_error::{BGitError, BGitErrorWorkflowType, NO_EVENT, NO_RULE},
+    rules::Rule,
+};
+use git2::{IndexAddOption, Repository};
+use std::path::Path;
 
 pub(crate) struct GitAdd {
     name: String,
@@ -37,6 +41,56 @@ impl AtomicEvent for GitAdd {
     }
 
     fn raw_execute(&self) -> Result<bool, Box<BGitError>> {
+        // Open the repository at the current directory
+        let repo = Repository::discover(Path::new(".")).map_err(|e| {
+            Box::new(BGitError::new(
+                "BGitError",
+                &format!("Failed to open repository: {}", e),
+                BGitErrorWorkflowType::AtomicEvent,
+                NO_EVENT,
+                &self.name,
+                NO_RULE,
+            ))
+        })?;
+
+        // Get the repository index
+        let mut index = repo.index().map_err(|e| {
+            Box::new(BGitError::new(
+                "BGitError",
+                &format!("Failed to get repository index: {}", e),
+                BGitErrorWorkflowType::AtomicEvent,
+                NO_EVENT,
+                &self.name,
+                NO_RULE,
+            ))
+        })?;
+
+        // Using ["."], which indicates the current directory recursively.
+        index
+            .add_all(["."], IndexAddOption::DEFAULT, None)
+            .map_err(|e| {
+                Box::new(BGitError::new(
+                    "BGitError",
+                    &format!("Failed to add files to index: {}", e),
+                    BGitErrorWorkflowType::AtomicEvent,
+                    NO_EVENT,
+                    &self.name,
+                    NO_RULE,
+                ))
+            })?;
+
+        // Write the index changes to disk
+        index.write().map_err(|e| {
+            Box::new(BGitError::new(
+                "BGitError",
+                &format!("Failed to write index: {}", e),
+                BGitErrorWorkflowType::AtomicEvent,
+                NO_EVENT,
+                &self.name,
+                NO_RULE,
+            ))
+        })?;
+
         Ok(true)
     }
 }
