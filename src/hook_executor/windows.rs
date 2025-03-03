@@ -52,7 +52,7 @@
 //!   - Path validation errors
 use std::fs;
 use std::io::{BufRead, BufReader};
-use std::path::{Path, PathBuf};
+use std::path::Path;
 use std::process::{Command, Stdio};
 
 use super::error::create_hook_error;
@@ -122,7 +122,7 @@ pub fn execute_hook_util(event_hook_path: &Path, event_name: &str) -> Result<boo
     }
 
     // Try to create an appropriate command for the hook
-    let mut command = match create_command_for_hook(&hook_path) {
+    let mut command = match create_command_for_hook(&event_hook_path) {
         Some(cmd) => cmd,
         None => {
             // Try bash execution as fallback
