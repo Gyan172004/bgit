@@ -8,14 +8,14 @@ use crate::{
     rules::Rule,
     util::find_hook_with_extension,
 };
-pub(crate) mod git_add;
+pub mod git_add;
 mod git_branch;
 mod git_checkout;
 mod git_clean;
-mod git_clone;
+pub mod git_clone;
 mod git_commit;
 mod git_filter_repo;
-mod git_init;
+pub mod git_init;
 mod git_pull;
 mod git_push;
 mod git_restore;
@@ -66,41 +66,35 @@ pub(crate) trait AtomicEvent {
         hook_type: HookType,
     ) -> Result<bool, Box<BGitError>> {
         let cwd = env::current_dir().expect("Failed to get current directory");
-        let git_repo = Repository::discover(cwd);
-        if git_repo.is_ok() {
-            let git_repo = git_repo.unwrap();
-            let git_repo_path = git_repo
-                .path()
-                .parent()
-                .expect("Failed to crawl to parent directory of .git folder");
-            let bgit_hooks_path = git_repo_path.join(".bgit").join("hooks");
-
-            let event_hook_path = bgit_hooks_path.join(event_hook_file_name);
-            match find_hook_with_extension(&event_hook_path) {
-                None => Ok(true),
-                Some(hook_path) => {
-                    let hook_type_str = match hook_type {
-                        HookType::PreEvent => "pre",
-                        HookType::PostEvent => "post",
-                    };
-                    eprintln!(
-                        "{} Running {}-event hook for {}",
-                        PENGUIN_EMOJI,
-                        hook_type_str,
-                        self.get_name().cyan().bold()
-                    );
-                    execute_hook_util(&hook_path, self.get_name())
-                }
+        let git_repo = Repository::discover(&cwd);
+        let bgit_hooks_path = match git_repo.is_ok() {
+            true => {
+                let git_repo = git_repo.unwrap();
+                let git_repo_path = git_repo
+                    .path()
+                    .parent()
+                    .expect("Failed to crawl to parent directory of .git folder");
+                git_repo_path.join(".bgit").join("hooks")
             }
-        } else {
-            Err(Box::new(BGitError::new(
-                "Can't run event-hook",
-                "No git repository found",
-                BGitErrorWorkflowType::AtomicEvent,
-                NO_STEP,
-                self.get_name(),
-                NO_RULE,
-            )))
+            false => cwd.join(".bgit").join("hooks"),
+        };
+
+        let event_hook_path = bgit_hooks_path.join(event_hook_file_name);
+        match find_hook_with_extension(&event_hook_path) {
+            None => Ok(true),
+            Some(hook_path) => {
+                let hook_type_str = match hook_type {
+                    HookType::PreEvent => "pre",
+                    HookType::PostEvent => "post",
+                };
+                eprintln!(
+                    "{} Running {}-event hook for {}",
+                    PENGUIN_EMOJI,
+                    hook_type_str,
+                    self.get_name().cyan().bold()
+                );
+                execute_hook_util(&hook_path, self.get_name())
+            }
         }
     }
 
