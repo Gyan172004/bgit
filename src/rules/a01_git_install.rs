@@ -1,4 +1,4 @@
-use crate::bgit_error::{BGitError, NO_EVENT, NO_STEP};
+use crate::bgit_error::{BGitError, BGitErrorWorkflowType, NO_EVENT, NO_STEP};
 use crate::rules::{Rule, RuleLevel, RuleOutput};
 use std::process::Command;
 
@@ -58,7 +58,7 @@ impl Rule for IsGitInstalledLocally {
             Err(e) => Err(Box::new(BGitError::new(
                 "Failed to execute command",
                 &e.to_string(),
-                "IsGitInstalledLocally",
+                BGitErrorWorkflowType::Rules,
                 NO_STEP,
                 NO_EVENT,
                 self.get_name(),

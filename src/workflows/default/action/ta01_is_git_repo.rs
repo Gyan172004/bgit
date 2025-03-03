@@ -1,13 +1,15 @@
 use crate::{
     bgit_error::BGitError,
-    common_store::workflow_store::{TASK_ASK_TO_INIT_GIT, TASK_HAS_STASH},
     step::{
         ActionStep, PromptStep, Step,
         Task::{ActionStepTask, PromptStepTask},
     },
+    workflows::default::prompt::pa01_ask_to_init_git::AskToInitGit,
 };
 use git2::Repository;
 use std::env;
+
+use super::ta02_has_stash::HasStash;
 
 pub(crate) struct IsGitRepo {
     name: String,
@@ -29,13 +31,13 @@ impl ActionStep for IsGitRepo {
     fn execute(&self) -> Result<Step, Box<BGitError>> {
         let cwd = env::current_dir().expect("Failed to get current directory");
         if Repository::discover(cwd).is_ok() {
-            Ok(Step::Task(ActionStepTask(Box::new(
-                TASK_HAS_STASH.copy_struct(),
-            ))))
+            Ok(Step::Task(ActionStepTask(Box::new(HasStash::new(
+                "has_stash",
+            )))))
         } else {
-            Ok(Step::Task(PromptStepTask(Box::new(
-                TASK_ASK_TO_INIT_GIT.copy_struct(),
-            ))))
+            Ok(Step::Task(PromptStepTask(Box::new(AskToInitGit::new(
+                "ask_to_init_git",
+            )))))
         }
     }
 }

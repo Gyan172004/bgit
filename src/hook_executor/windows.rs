@@ -59,26 +59,6 @@ use super::error::create_hook_error;
 use super::process::handle_process_output;
 use crate::bgit_error::BGitError;
 
-fn find_hook_with_extension(hook_path: &Path) -> Option<PathBuf> {
-    let hook_dir = hook_path.parent()?;
-    let hook_name = hook_path.file_name()?.to_str()?;
-
-    // If hook exists with no extension
-    if hook_path.exists() {
-        return Some(hook_path.to_path_buf());
-    }
-
-    // Try different extensions
-    for ext in &[".bat", ".cmd", ".ps1", ".exe"] {
-        let path = hook_dir.join(format!("{}{}", hook_name, ext));
-        if path.exists() {
-            return Some(path);
-        }
-    }
-
-    None
-}
-
 fn create_command_for_hook(hook_path: &Path) -> Option<Command> {
     let extension = hook_path.extension()?.to_str()?;
 
@@ -135,29 +115,25 @@ fn try_bash_execution(hook_path: &Path) -> Option<Command> {
     None
 }
 
-pub fn execute_hook_util(
-    pre_event_hook_path: &Path,
-    event_name: &str,
-) -> Result<bool, Box<BGitError>> {
+pub fn execute_hook_util(event_hook_path: &Path, event_name: &str) -> Result<bool, Box<BGitError>> {
     // Check if hook exists with any of the supported extensions
-    let hook_path = match find_hook_with_extension(pre_event_hook_path) {
-        Some(path) => path,
-        None => return Ok(true), // No hook found, continue execution
-    };
+    if !event_hook_path.exists() {
+        return Ok(true);
+    }
 
     // Try to create an appropriate command for the hook
     let mut command = match create_command_for_hook(&hook_path) {
         Some(cmd) => cmd,
         None => {
             // Try bash execution as fallback
-            match try_bash_execution(pre_event_hook_path) {
+            match try_bash_execution(event_hook_path) {
                 Some(cmd) => cmd,
                 None => {
                     // Last resort: try cmd.exe
                     let mut cmd = Command::new("cmd");
                     cmd.args([
                         "/C",
-                        pre_event_hook_path.to_str().ok_or_else(|| {
+                        event_hook_path.to_str().ok_or_else(|| {
                             create_hook_error(
                                 "Invalid path",
                                 "Path contains invalid characters",

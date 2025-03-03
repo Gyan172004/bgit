@@ -2,10 +2,19 @@
 pub(crate) struct BGitError {
     name: String,
     message: String,
-    workflow_name: String,
+    workflow_type: BGitErrorWorkflowType,
     step_name: String,
     event_name: String,
     rule_name: String,
+}
+
+#[derive(Debug)]
+pub(crate) enum BGitErrorWorkflowType {
+    Rules,
+    AtomicEvent,
+    RawExecutor,
+    HookExecutor,
+    WorkflowQueue,
 }
 
 pub(crate) const EMPTY_STRING: &str = "";
@@ -17,7 +26,7 @@ impl BGitError {
     pub(crate) fn new(
         name: &str,
         message: &str,
-        workflow_name: &str,
+        workflow_type: BGitErrorWorkflowType,
         step_name: &str,
         event_name: &str,
         rule_name: &str,
@@ -25,7 +34,7 @@ impl BGitError {
         Self {
             name: name.to_owned(),
             message: message.to_owned(),
-            workflow_name: workflow_name.to_owned(),
+            workflow_type,
             step_name: step_name.to_owned(),
             event_name: event_name.to_owned(),
             rule_name: rule_name.to_owned(),
@@ -35,7 +44,7 @@ impl BGitError {
     pub(crate) fn print_error(&self) {
         eprintln!("The operation errored out for some reasons!");
         eprint!("[");
-        eprint!("{}", self.workflow_name);
+        eprint!("{:?}", self.workflow_type);
         eprint!("::");
         if self.step_name != NO_STEP {
             eprint!("{}", self.step_name);

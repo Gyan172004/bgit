@@ -25,13 +25,6 @@ pub(crate) trait ActionStep {
         Self: Sized;
     fn get_name(&self) -> &str;
     fn execute(&self) -> Result<Step, Box<BGitError>>;
-
-    fn copy_struct(&self) -> Self
-    where
-        Self: Sized,
-    {
-        Self::new(self.get_name())
-    }
 }
 
 pub(crate) trait PromptStep {
@@ -40,11 +33,4 @@ pub(crate) trait PromptStep {
         Self: Sized;
     fn get_name(&self) -> &str;
     fn execute(&self) -> Result<Step, Box<BGitError>>;
-
-    fn copy_struct(&self) -> Self
-    where
-        Self: Sized,
-    {
-        Self::new(self.get_name())
-    }
 }

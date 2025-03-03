@@ -3,9 +3,10 @@ use git2::Repository;
 use std::env;
 
 use crate::{
-    bgit_error::{BGitError, NO_RULE, NO_STEP},
+    bgit_error::{BGitError, BGitErrorWorkflowType, NO_RULE, NO_STEP},
     hook_executor::execute_hook_util,
     rules::Rule,
+    util::find_hook_with_extension,
 };
 pub(crate) mod git_add;
 mod git_branch;
@@ -21,6 +22,11 @@ mod git_restore;
 mod git_status;
 
 const PENGUIN_EMOJI: &str = "🐧";
+
+pub(crate) enum HookType {
+    PreEvent,
+    PostEvent,
+}
 
 /// Sample struct
 /// struct GitAdd {
@@ -42,27 +48,23 @@ pub(crate) trait AtomicEvent {
 
     // Hooks
     fn pre_execute_hook(&self) -> Result<bool, Box<BGitError>> {
-        eprintln!(
-            "{} Running pre-execute hook for {}",
-            PENGUIN_EMOJI,
-            self.get_name().cyan().bold()
-        );
-        let pre_event_hook_file_name: String = format!("pre_{}", self.get_name());
-        self.execute_hook(&pre_event_hook_file_name)
+        let event_hook_file_name: String = format!("pre_{}", self.get_name());
+        self.execute_hook(&event_hook_file_name, HookType::PreEvent)
     }
+
     fn post_execute_hook(&self) -> Result<bool, Box<BGitError>> {
-        eprintln!(
-            "{} Running post-execute hook for {}",
-            PENGUIN_EMOJI,
-            self.get_name().cyan().bold()
-        );
         let post_event_hook_file_name: String = format!("post_{}", self.get_name());
-        self.execute_hook(&post_event_hook_file_name)
+        self.execute_hook(&post_event_hook_file_name, HookType::PostEvent)
     }
+
     /// Run hooks inside `{RepositoryBase}/.bgit/hooks/[pre|post]-{hook_name}`
     /// TODO: Implement for Windows and other OS using custom toml for custom runtime like
     /// shell and languages
-    fn execute_hook(&self, pre_event_hook_file_name: &str) -> Result<bool, Box<BGitError>> {
+    fn execute_hook(
+        &self,
+        event_hook_file_name: &str,
+        hook_type: HookType,
+    ) -> Result<bool, Box<BGitError>> {
         let cwd = env::current_dir().expect("Failed to get current directory");
         let git_repo = Repository::discover(cwd);
         if git_repo.is_ok() {
@@ -73,13 +75,28 @@ pub(crate) trait AtomicEvent {
                 .expect("Failed to crawl to parent directory of .git folder");
             let bgit_hooks_path = git_repo_path.join(".bgit").join("hooks");
 
-            let pre_event_hook_path = bgit_hooks_path.join(pre_event_hook_file_name);
-            execute_hook_util(&pre_event_hook_path, self.get_name())
+            let event_hook_path = bgit_hooks_path.join(event_hook_file_name);
+            match find_hook_with_extension(&event_hook_path) {
+                None => Ok(true),
+                Some(hook_path) => {
+                    let hook_type_str = match hook_type {
+                        HookType::PreEvent => "pre",
+                        HookType::PostEvent => "post",
+                    };
+                    eprintln!(
+                        "{} Running {}-event hook for {}",
+                        PENGUIN_EMOJI,
+                        hook_type_str,
+                        self.get_name().cyan().bold()
+                    );
+                    execute_hook_util(&hook_path, self.get_name())
+                }
+            }
         } else {
             Err(Box::new(BGitError::new(
                 "Can't run event-hook",
                 "No git repository found",
-                "AtomicEvent",
+                BGitErrorWorkflowType::AtomicEvent,
                 NO_STEP,
                 self.get_name(),
                 NO_RULE,
@@ -89,18 +106,22 @@ pub(crate) trait AtomicEvent {
 
     // Check against set of rules before running the event
     fn check_rules(&self) -> Result<bool, Box<BGitError>> {
+        let rules = self.get_pre_check_rule();
+        if rules.is_empty() {
+            return Ok(true);
+        }
         eprintln!(
             "{} Running pre-check rules for {}",
             PENGUIN_EMOJI,
             self.get_name().cyan().bold()
         );
-        for rule in self.get_pre_check_rule().iter() {
+        for rule in rules.iter() {
             let rule_passed = rule.execute()?;
             if !rule_passed {
                 return Err(Box::new(BGitError::new(
                     "Pre-check Rule failed",
                     rule.get_description(),
-                    "AtomicEvent",
+                    BGitErrorWorkflowType::AtomicEvent,
                     NO_STEP,
                     self.get_name(),
                     rule.get_name(),
@@ -116,12 +137,12 @@ pub(crate) trait AtomicEvent {
         if !rule_check_status {
             return Ok(false);
         }
-        let pre_event_hook_status = self.pre_execute_hook()?;
-        if !pre_event_hook_status {
+        let event_hook_status = self.pre_execute_hook()?;
+        if !event_hook_status {
             return Err(Box::new(BGitError::new(
                 "Pre-event hook failed",
                 "Pre-event hook failed!",
-                "AtomicEvent",
+                BGitErrorWorkflowType::AtomicEvent,
                 NO_STEP,
                 self.get_name(),
                 NO_RULE,
@@ -138,7 +159,7 @@ pub(crate) trait AtomicEvent {
             return Err(Box::new(BGitError::new(
                 "Raw executor failed",
                 "Raw executor failed!",
-                "RawExecutor",
+                BGitErrorWorkflowType::RawExecutor,
                 NO_STEP,
                 self.get_name(),
                 NO_RULE,
@@ -150,7 +171,7 @@ pub(crate) trait AtomicEvent {
             return Err(Box::new(BGitError::new(
                 "Post-event hook failed",
                 "Post-event hook failed!",
-                "AtomicEvent",
+                BGitErrorWorkflowType::AtomicEvent,
                 NO_STEP,
                 self.get_name(),
                 NO_RULE,

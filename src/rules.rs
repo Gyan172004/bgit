@@ -1,4 +1,4 @@
-use crate::bgit_error::{BGitError, NO_EVENT, NO_STEP};
+use crate::bgit_error::{BGitError, BGitErrorWorkflowType, NO_EVENT, NO_STEP};
 
 pub(crate) mod a01_git_install;
 mod a02_git_name_email_setup;
@@ -72,7 +72,7 @@ pub(crate) trait Rule {
                         Err(Box::new(BGitError::new(
                             "Failed to verify the rule",
                             &exception,
-                            "Rule",
+                            BGitErrorWorkflowType::Rules,
                             NO_STEP,
                             NO_EVENT,
                             self.get_name(),
@@ -82,7 +82,7 @@ pub(crate) trait Rule {
                     Err(Box::new(BGitError::new(
                         "Failed to fix the rule",
                         &exception,
-                        "Rule",
+                        BGitErrorWorkflowType::Rules,
                         NO_STEP,
                         NO_EVENT,
                         self.get_name(),
