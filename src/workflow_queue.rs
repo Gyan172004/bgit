@@ -1,4 +1,4 @@
-use crate::bgit_error::{BGitError, NO_EVENT, NO_RULE, NO_STEP};
+use crate::bgit_error::{BGitError, BGitErrorWorkflowType, NO_EVENT, NO_RULE, NO_STEP};
 use crate::step::Task::{ActionStepTask, PromptStepTask};
 use crate::step::{Step, Task};
 use colored::Colorize;
@@ -87,7 +87,7 @@ impl WorkflowQueue {
                         return Err(Box::new(BGitError::new(
                             "next_step must not be a Start Task!",
                             "next_step must not be a Start Task! This is a bug in the code",
-                            "WorkflowQueue",
+                            BGitErrorWorkflowType::WorkflowQueue,
                             NO_STEP,
                             NO_EVENT,
                             NO_RULE,
@@ -113,7 +113,7 @@ impl WorkflowQueue {
                     Err(Box::new(BGitError::new(
                         "final_step must be a Stop Task!",
                         "final_step must be a Stop Task! This is a bug in the code",
-                        "WorkflowQueue",
+                        BGitErrorWorkflowType::WorkflowQueue,
                         NO_STEP,
                         NO_EVENT,
                         NO_RULE,
@@ -123,7 +123,7 @@ impl WorkflowQueue {
             _ => Err(Box::new(BGitError::new(
                 "init_step must be a Start Task!",
                 "init_step must be a Start Task! This is a bug in the code",
-                "WorkflowQueue",
+                BGitErrorWorkflowType::WorkflowQueue,
                 NO_STEP,
                 NO_EVENT,
                 NO_RULE,

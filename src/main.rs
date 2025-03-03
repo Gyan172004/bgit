@@ -12,6 +12,7 @@ mod events;
 mod hook_executor;
 mod rules;
 mod step;
+mod util;
 mod workflow_queue;
 mod workflows;
 
