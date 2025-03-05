@@ -9,6 +9,7 @@ use std::time::Instant;
 const HATCHING_CHICK_EMOJI: &str = "🐣";
 
 pub(crate) struct WorkflowQueue {
+    #[allow(dead_code)]
     name: String,
     init_step: Step,
     pb: ProgressBar,

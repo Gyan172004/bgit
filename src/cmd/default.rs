@@ -11,6 +11,6 @@ pub(crate) fn default_cmd_workflow() {
     );
     match workflow_queue.execute() {
         Ok(_) => {}
-        Err(err) => eprintln!("Error : {:#?}", err),
+        Err(err) => err.print_error(),
     };
 }

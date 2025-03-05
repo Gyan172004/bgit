@@ -4,7 +4,7 @@ use crate::{
         ActionStep, PromptStep, Step,
         Task::{ActionStepTask, PromptStepTask},
     },
-    workflows::default::prompt::pa01_ask_to_init_git::AskToInitGit,
+    workflows::default::prompt::pa01_ask_to_init_clone_git::AskToInitCloneGit,
 };
 use git2::Repository;
 use std::env;
@@ -35,9 +35,9 @@ impl ActionStep for IsGitRepo {
                 "has_stash",
             )))))
         } else {
-            Ok(Step::Task(PromptStepTask(Box::new(AskToInitGit::new(
-                "ask_to_init_git",
-            )))))
+            Ok(Step::Task(PromptStepTask(Box::new(
+                AskToInitCloneGit::new("ask_to_init_git"),
+            ))))
         }
     }
 }
