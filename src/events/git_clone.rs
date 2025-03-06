@@ -2,6 +2,7 @@ use super::AtomicEvent;
 use crate::bgit_error::{BGitError, BGitErrorWorkflowType, NO_RULE, NO_STEP};
 use crate::rules::Rule;
 use git2::Repository;
+use std::env;
 use std::path::Path;
 
 pub struct GitClone {
@@ -74,6 +75,8 @@ impl AtomicEvent for GitClone {
             ))
         })?;
 
+        self.update_cwd_path()?;
+
         Ok(true)
     }
 }
@@ -82,5 +85,33 @@ impl GitClone {
     pub fn set_url(&mut self, url: &str) -> &mut Self {
         self.url = url.to_owned();
         self
+    }
+
+    fn update_cwd_path(&self) -> Result<(), Box<BGitError>> {
+        let repo_name = match self.url.split("/").last() {
+            Some(repo_name) => repo_name,
+            None => {
+                return Err(Box::new(BGitError::new(
+                    "BGitError",
+                    "Failed to get repository name from URL",
+                    BGitErrorWorkflowType::AtomicEvent,
+                    NO_STEP,
+                    self.get_name(),
+                    NO_RULE,
+                )));
+            }
+        };
+
+        match env::set_current_dir(repo_name) {
+            Ok(_) => Ok(()),
+            Err(_) => Err(Box::new(BGitError::new(
+                "Failed to update current working directory path",
+                "update_cwd_path",
+                BGitErrorWorkflowType::PromptStep,
+                NO_STEP,
+                self.get_name(),
+                NO_RULE,
+            ))),
+        }
     }
 }

@@ -4,7 +4,7 @@ use crate::{
     rules::Rule,
 };
 use git2::{Repository, RepositoryInitOptions};
-use std::path::Path;
+use std::{env, path::Path};
 
 pub struct GitInit {
     name: String,
@@ -17,6 +17,20 @@ impl GitInit {
     pub fn with_path(mut self, path: &str) -> Self {
         self.path = path.to_owned();
         self
+    }
+
+    fn update_cwd_path(&self) -> Result<(), Box<BGitError>> {
+        match env::set_current_dir(&self.path) {
+            Ok(_) => Ok(()),
+            Err(_) => Err(Box::new(BGitError::new(
+                "Failed to update current working directory path",
+                "update_cwd_path",
+                BGitErrorWorkflowType::PromptStep,
+                NO_STEP,
+                &self.name,
+                NO_RULE,
+            ))),
+        }
     }
 }
 
@@ -62,6 +76,8 @@ impl AtomicEvent for GitInit {
                 NO_RULE,
             ))
         })?;
+
+        self.update_cwd_path()?;
 
         Ok(true)
     }
