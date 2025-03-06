@@ -1,11 +1,11 @@
 use crate::{
     bgit_error::BGitError,
     step::{
-        ActionStep, PromptStep, Step,
-        Task::{self, ActionStepTask},
+        PromptStep, Step,
+        Task::{self},
     },
     workflows::default::{
-        action::ta03_init_git_repo::InitGitRepo, prompt::pa02_ask_to_clone_git::CloneGitRepo,
+        prompt::pa02_ask_to_clone_git::CloneGitRepo, prompt::pa03_init_git_repo::InitGitRepo,
     },
 };
 use dialoguer::{theme::ColorfulTheme, Input, Select};
@@ -59,7 +59,7 @@ impl PromptStep for AskToInitCloneGit {
 
                 init_git_repo.set_path(&path);
 
-                Ok(Step::Task(ActionStepTask(Box::new(init_git_repo))))
+                Ok(Step::Task(Task::PromptStepTask(Box::new(init_git_repo))))
             }
             //  Clone an existing repository
             1 => {

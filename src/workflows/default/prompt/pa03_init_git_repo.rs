@@ -1,7 +1,7 @@
 use crate::{
     bgit_error::BGitError,
     events::{git_init::GitInit, AtomicEvent},
-    step::{ActionStep, Step},
+    step::{PromptStep, Step},
 };
 
 pub(crate) struct InitGitRepo {
@@ -15,7 +15,7 @@ impl InitGitRepo {
     }
 }
 
-impl ActionStep for InitGitRepo {
+impl PromptStep for InitGitRepo {
     fn new() -> Self {
         InitGitRepo {
             name: "init_git_repo".to_owned(),
