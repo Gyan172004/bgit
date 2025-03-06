@@ -20,7 +20,7 @@ impl std::cmp::PartialEq for Task {
 }
 
 pub(crate) trait ActionStep {
-    fn new(name: &str) -> Self
+    fn new() -> Self
     where
         Self: Sized;
     fn get_name(&self) -> &str;
@@ -28,7 +28,7 @@ pub(crate) trait ActionStep {
 }
 
 pub(crate) trait PromptStep {
-    fn new(name: &str) -> Self
+    fn new() -> Self
     where
         Self: Sized;
     fn get_name(&self) -> &str;

@@ -11,12 +11,12 @@ pub(crate) struct CloneGitRepo {
 }
 
 impl PromptStep for CloneGitRepo {
-    fn new(name: &str) -> Self
+    fn new() -> Self
     where
         Self: Sized,
     {
         CloneGitRepo {
-            name: name.to_owned(),
+            name: "clone_repo".to_owned(),
         }
     }
 
@@ -55,7 +55,7 @@ impl PromptStep for CloneGitRepo {
         }
 
         // // Get a mutable reference to the GitClone event
-        let mut git_clone = GitClone::new("git_clone", "Clone a Git repository");
+        let mut git_clone = GitClone::new();
 
         // Set the URL
         git_clone.set_url(&clone_link);

@@ -8,18 +8,16 @@ use std::path::Path;
 
 pub(crate) struct GitAdd {
     name: String,
-    action_description: String,
     pre_check_rules: Vec<Box<dyn Rule + Send + Sync>>,
 }
 
 impl AtomicEvent for GitAdd {
-    fn new(name: &str, action_description: &str) -> Self
+    fn new() -> Self
     where
         Self: Sized,
     {
         GitAdd {
-            name: name.to_owned(),
-            action_description: action_description.to_owned(),
+            name: "git_add".to_owned(),
             pre_check_rules: vec![],
         }
     }
@@ -29,7 +27,7 @@ impl AtomicEvent for GitAdd {
     }
 
     fn get_action_description(&self) -> &str {
-        &self.action_description
+        "Add files to staging area"
     }
 
     fn add_pre_check_rule(&mut self, rule: Box<dyn Rule + Send + Sync>) {

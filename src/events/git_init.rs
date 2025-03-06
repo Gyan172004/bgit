@@ -8,7 +8,6 @@ use std::path::Path;
 
 pub struct GitInit {
     name: String,
-    action_description: String,
     pre_check_rules: Vec<Box<dyn Rule + Send + Sync>>,
     path: String, // Add path field
 }
@@ -22,13 +21,12 @@ impl GitInit {
 }
 
 impl AtomicEvent for GitInit {
-    fn new(name: &str, action_description: &str) -> Self
+    fn new() -> Self
     where
         Self: Sized,
     {
         GitInit {
-            name: name.to_owned(),
-            action_description: action_description.to_owned(),
+            name: "git_init".to_owned(),
             pre_check_rules: vec![],
             path: ".".to_owned(), // Default to current directory
         }
@@ -39,7 +37,7 @@ impl AtomicEvent for GitInit {
     }
 
     fn get_action_description(&self) -> &str {
-        &self.action_description
+        "Initialize git repository"
     }
 
     fn add_pre_check_rule(&mut self, rule: Box<dyn Rule + Send + Sync>) {

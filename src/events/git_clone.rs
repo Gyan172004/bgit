@@ -5,31 +5,27 @@ use git2::Repository;
 use std::path::Path;
 
 pub struct GitClone {
-    pub name: String,
-    pub action_description: String,
     pub pre_check_rules: Vec<Box<dyn Rule + Send + Sync>>,
     pub url: String,
 }
 
 impl AtomicEvent for GitClone {
-    fn new(name: &str, action_description: &str) -> Self
+    fn new() -> Self
     where
         Self: Sized,
     {
         GitClone {
-            name: name.to_owned(),
-            action_description: action_description.to_owned(),
             pre_check_rules: vec![],
             url: String::new(),
         }
     }
 
     fn get_name(&self) -> &str {
-        &self.name
+        "git_clone"
     }
 
     fn get_action_description(&self) -> &str {
-        &self.action_description
+        "Clone a Git repository"
     }
 
     fn add_pre_check_rule(&mut self, rule: Box<dyn Rule + Send + Sync>) {

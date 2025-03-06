@@ -15,12 +15,12 @@ pub(crate) struct AskToInitCloneGit {
 }
 
 impl PromptStep for AskToInitCloneGit {
-    fn new(name: &str) -> Self
+    fn new() -> Self
     where
         Self: Sized,
     {
         AskToInitCloneGit {
-            name: name.to_owned(),
+            name: "ask_to_init_git".to_owned(),
         }
     }
 
@@ -55,7 +55,7 @@ impl PromptStep for AskToInitCloneGit {
 
                 // Create InitGitRepo with path
 
-                let mut init_git_repo = InitGitRepo::new("init_git_repo");
+                let mut init_git_repo = InitGitRepo::new();
 
                 init_git_repo.set_path(&path);
 
@@ -66,7 +66,7 @@ impl PromptStep for AskToInitCloneGit {
                 // Clone an existing repository - redirect to clone_repo action
                 println!("Preparing to clone a repository...");
                 Ok(Step::Task(Task::PromptStepTask(Box::new(
-                    CloneGitRepo::new("clone_repo"),
+                    CloneGitRepo::new(),
                 ))))
             }
             _ => Ok(Step::Stop),

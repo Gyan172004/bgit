@@ -16,12 +16,12 @@ pub(crate) struct IsGitRepo {
 }
 
 impl ActionStep for IsGitRepo {
-    fn new(name: &str) -> Self
+    fn new() -> Self
     where
         Self: Sized,
     {
         IsGitRepo {
-            name: name.to_owned(),
+            name: "is_git_repo".to_owned(),
         }
     }
     fn get_name(&self) -> &str {
@@ -31,12 +31,10 @@ impl ActionStep for IsGitRepo {
     fn execute(&self) -> Result<Step, Box<BGitError>> {
         let cwd = env::current_dir().expect("Failed to get current directory");
         if Repository::discover(cwd).is_ok() {
-            Ok(Step::Task(ActionStepTask(Box::new(HasStash::new(
-                "has_stash",
-            )))))
+            Ok(Step::Task(ActionStepTask(Box::new(HasStash::new()))))
         } else {
             Ok(Step::Task(PromptStepTask(Box::new(
-                AskToInitCloneGit::new("ask_to_init_git"),
+                AskToInitCloneGit::new(),
             ))))
         }
     }

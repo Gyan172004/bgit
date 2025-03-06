@@ -16,9 +16,9 @@ impl InitGitRepo {
 }
 
 impl ActionStep for InitGitRepo {
-    fn new(name: &str) -> Self {
+    fn new() -> Self {
         InitGitRepo {
-            name: name.to_owned(),
+            name: "init_git_repo".to_owned(),
             path: ".".to_owned(),
         }
     }
@@ -28,7 +28,7 @@ impl ActionStep for InitGitRepo {
     }
 
     fn execute(&self) -> Result<Step, Box<BGitError>> {
-        let git_init = GitInit::new("git_init", "Initialize git repository").with_path(&self.path);
+        let git_init = GitInit::new().with_path(&self.path);
         git_init.execute()?;
         Ok(Step::Stop)
     }

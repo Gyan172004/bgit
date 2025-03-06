@@ -9,11 +9,11 @@ pub(crate) struct IsGitInstalledLocally {
 }
 
 impl Rule for IsGitInstalledLocally {
-    fn new(name: &str, description: &str, level: RuleLevel) -> Self {
+    fn new() -> Self {
         IsGitInstalledLocally {
-            name: name.to_string(),
-            description: description.to_string(),
-            level,
+            name: "IsGitInstalledLocally".to_string(),
+            description: "Check if Git is installed".to_string(),
+            level: RuleLevel::Error,
         }
     }
 
