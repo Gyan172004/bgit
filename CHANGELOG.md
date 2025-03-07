@@ -5,10 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## v0.2.0 (2025-03-07)
+## v0.2.1 (2025-03-07)
 
 ### Chore
 
+ - <csr-id-8cd7160abfaa33da9dd2db1b58a7ed4eaf3a4db6/> release script
  - <csr-id-1c5ac77681ee1f446cd5af527e151d456cf69838/> add error types
  - <csr-id-b7a64a7b7a2973a4923b7a3abad6656c60656c76/> add error types
  - <csr-id-701e5dfe2b1aeb70a58c45d1dad705b7a2a377d7/> fix tags
@@ -64,8 +65,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <csr-read-only-do-not-edit/>
 
- - 50 commits contributed to the release over the course of 319 calendar days.
- - 34 commits were understood as [conventional](https://www.conventionalcommits.org).
+ - 52 commits contributed to the release over the course of 319 calendar days.
+ - 35 commits were understood as [conventional](https://www.conventionalcommits.org).
  - 0 issues like '(#ID)' were seen in commit messages
 
 ### Commit Details
@@ -75,6 +76,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 <details><summary>view details</summary>
 
  * **Uncategorized**
+    - Release script ([`8cd7160`](https://github.com/Gyan172004/bgit/commit/8cd7160abfaa33da9dd2db1b58a7ed4eaf3a4db6))
+    - Release bgit v0.2.0 ([`3f1d285`](https://github.com/Gyan172004/bgit/commit/3f1d2853bc8f115b21bfe3634c6dd64afe574eeb))
     - Windows hook_executor is implemented and fairly stable now ([`b6a4b55`](https://github.com/Gyan172004/bgit/commit/b6a4b5561581c9d96e4ff3794c083d7cccc4356e))
     - Add update_cwd_path method to GitClone and InitGitRepo for setting current working directory ([`f39eacb`](https://github.com/Gyan172004/bgit/commit/f39eacb0f6235a8be0ea4eafea7cad363923f13a))
     - Remove old InitGitRepo action and replace with new prompt implementation ([`8045ea3`](https://github.com/Gyan172004/bgit/commit/8045ea32b7a5e4b259934541b72ad9d285d84bda))
@@ -126,4 +129,77 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     - Add MIT license ([`ec2b431`](https://github.com/Gyan172004/bgit/commit/ec2b4318007176ab9fcc8673c37e15e07ad90c14))
     - Initial commit ([`22aa5c0`](https://github.com/Gyan172004/bgit/commit/22aa5c046d2d68e834a88136526bee58658637df))
 </details>
+
+## v0.2.0 (2025-03-07)
+
+<csr-id-1c5ac77681ee1f446cd5af527e151d456cf69838/>
+<csr-id-b7a64a7b7a2973a4923b7a3abad6656c60656c76/>
+<csr-id-701e5dfe2b1aeb70a58c45d1dad705b7a2a377d7/>
+<csr-id-a8528e3deb827643cd4fda69245fb86218531961/>
+<csr-id-8cff501b2278c3407ebaeb582f2e0abda5f8e27d/>
+<csr-id-fb5ee8d35b9c955d70973cd3ce330767ee1d10de/>
+<csr-id-e95d8c35b1c924de1feaf011872781f711f2a6ad/>
+<csr-id-4bb574f5a0a2cd318ff7b18286c6856cd56c4aa0/>
+<csr-id-3685f3c011840588ff892c7c57259dd62c6f2477/>
+<csr-id-c555361aa97d43c1b86840401c7ebe883c544dfe/>
+<csr-id-a47e1126912a9e84a7dd48e8ad38386ed6c5057e/>
+<csr-id-f8bdce230d3edc08a2944c335e648e2835eabd48/>
+<csr-id-ea17e150e9839dede10ed3f568d67f22bc8b7416/>
+<csr-id-376da8460a8e0bd4c45d9cbc582365a959e399a3/>
+<csr-id-fb00861d9ca0b9498f2efb87543735a6ce3849c3/>
+<csr-id-8045ea32b7a5e4b259934541b72ad9d285d84bda/>
+<csr-id-dd4c718df7b0f27c9498cfa481866c47dbda18bd/>
+
+### Chore
+
+ - <csr-id-1c5ac77681ee1f446cd5af527e151d456cf69838/> add error types
+ - <csr-id-b7a64a7b7a2973a4923b7a3abad6656c60656c76/> add error types
+ - <csr-id-701e5dfe2b1aeb70a58c45d1dad705b7a2a377d7/> fix tags
+ - <csr-id-a8528e3deb827643cd4fda69245fb86218531961/> migrate to rust 2024 and some ci
+ - <csr-id-8cff501b2278c3407ebaeb582f2e0abda5f8e27d/> fix typo
+ - <csr-id-fb5ee8d35b9c955d70973cd3ce330767ee1d10de/> fix os parity checks
+ - <csr-id-e95d8c35b1c924de1feaf011872781f711f2a6ad/> renamed commit hook name format
+ - <csr-id-4bb574f5a0a2cd318ff7b18286c6856cd56c4aa0/> add sample cmd usages and deps
+ - <csr-id-3685f3c011840588ff892c7c57259dd62c6f2477/> add rules
+
+### Documentation
+
+ - <csr-id-b6a4b5561581c9d96e4ff3794c083d7cccc4356e/> windows hook_executor is implemented and fairly stable now
+ - <csr-id-2cb356903243c6a8aee7e7d67f78930fc43e41e5/> add shields badge
+ - <csr-id-e79bafc4122361dbfda32b87c40f415397a94413/> add arch docs
+ - <csr-id-fc72b4b6acf1914f847cfbd63653b314240eb338/> add workflows
+
+### New Features
+
+ - <csr-id-f39eacb0f6235a8be0ea4eafea7cad363923f13a/> add update_cwd_path method to GitClone and InitGitRepo for setting current working directory
+ - <csr-id-dd76e5154ec3681aba00f23d945802ee5197305c/> add new error types and update module visibility
+ - <csr-id-b93abfc35d659087988f1a1bbad73aa265dc4cda/> add new error types and update module visibility
+ - <csr-id-daa823ffdb57d1f71c5c889eb9e7a53a3a25dbbb/> implement full git add logic using libgit2
+   This commit introduces a complete implementation of git add functionality in the GitAdd event. Instead of using a placeholder command, the new code leverages libgit2 (via the git2 crate) to open the repository, retrieve the index, add all files recursively, and write the index to disk. Detailed error handling is provided via BGitError.
+ - <csr-id-dd2a5dcf2a2938686ca938184e4df79812161fe3/> improved ui for cli
+ - <csr-id-82c701afb5230e3e759875103806c9f680657aec/> common action store implemented
+ - <csr-id-3b8196f3d7008f404af5baa943bd867c8e25098b/> Heap for error type and refactor and hook executor
+ - <csr-id-ff7a9b546891852208c01596a0d10ba387a6eddc/> code structure
+ - <csr-id-ec2b4318007176ab9fcc8673c37e15e07ad90c14/> add MIT license
+ - <csr-id-22aa5c046d2d68e834a88136526bee58658637df/> initial commit
+
+### Bug Fixes
+
+ - <csr-id-add40ef35161ba0efa46f5b363dd6c560f0279fb/> fix windows ci
+ - <csr-id-1b7e460a2394bea0c9e69495513a2f3e326067fe/> fix windows ci
+ - <csr-id-ec365a0a575fc19ace3ce458041f3c916260692e/> fix prompt dialog mangled into progress bar
+
+### Other
+
+ - <csr-id-c555361aa97d43c1b86840401c7ebe883c544dfe/> windows runners as well
+ - <csr-id-a47e1126912a9e84a7dd48e8ad38386ed6c5057e/> windows runners as well
+ - <csr-id-f8bdce230d3edc08a2944c335e648e2835eabd48/> code cov check
+ - <csr-id-ea17e150e9839dede10ed3f568d67f22bc8b7416/> fix
+ - <csr-id-376da8460a8e0bd4c45d9cbc582365a959e399a3/> metadata changes
+ - <csr-id-fb00861d9ca0b9498f2efb87543735a6ce3849c3/> add action scripts for test and build
+
+### Refactor
+
+ - <csr-id-8045ea32b7a5e4b259934541b72ad9d285d84bda/> remove old InitGitRepo action and replace with new prompt implementation
+ - <csr-id-dd4c718df7b0f27c9498cfa481866c47dbda18bd/> remove name, description from trait definition for new
 
