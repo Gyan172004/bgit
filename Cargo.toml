@@ -15,7 +15,7 @@ clap = { version = "4.5.31", features = ["derive"] }
 clap_complete = "4.5.46"
 colored = "3.0.0"
 dialoguer = "0.11.0"
-git2 = "0.20.0"
+git2 = "0.20.1"
 indicatif = "0.17.11"
 
 [profile.dev]
