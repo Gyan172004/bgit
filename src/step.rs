@@ -16,12 +16,10 @@ impl std::cmp::PartialEq for Task {
     fn eq(&self, other: &Task) -> bool {
         // TODO: Improve the core matching logic for Task
         match (self, other) {
-            (Task::ActionStepTask(a), Task::ActionStepTask(b)) => 
-                        a.get_name() == b.get_name(),
-            (Task::PromptStepTask(a), Task::PromptStepTask(b)) => 
-                        a.get_name() == b.get_name(),
+            (Task::ActionStepTask(a), Task::ActionStepTask(b)) => a.get_name() == b.get_name(),
+            (Task::PromptStepTask(a), Task::PromptStepTask(b)) => a.get_name() == b.get_name(),
             (Task::ActionStepTask(_), Task::PromptStepTask(_)) => false,
-                            (Task::PromptStepTask(_), Task::ActionStepTask(_)) => false,
+            (Task::PromptStepTask(_), Task::ActionStepTask(_)) => false,
         }
     }
 }
