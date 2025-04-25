@@ -1,3 +1,6 @@
+use colored::Colorize;
+
+#[allow(dead_code)]
 #[derive(Debug)]
 pub(crate) struct BGitError {
     name: String,
@@ -8,6 +11,7 @@ pub(crate) struct BGitError {
     rule_name: String,
 }
 
+#[allow(dead_code)]
 #[derive(Debug)]
 pub(crate) enum BGitErrorWorkflowType {
     Rules,
@@ -44,24 +48,24 @@ impl BGitError {
     }
 
     pub(crate) fn print_error(&self) {
-        eprintln!("The operation errored out for some reasons!");
-        eprint!("[");
-        eprint!("{:?}", self.workflow_type);
-        eprint!("::");
+        let mut context = format!("[{:?}", self.workflow_type);
         if self.step_name != NO_STEP {
-            eprint!("{}", self.step_name);
+            context.push_str(&format!("::{}", self.step_name));
         }
-        eprint!("::");
         if self.event_name != NO_EVENT {
-            eprint!("{}", self.event_name);
+            context.push_str(&format!("::{}", self.event_name));
         }
-        eprint!("::");
         if self.rule_name != NO_RULE {
-            eprint!("{}", self.rule_name);
+            context.push_str(&format!("::{}", self.rule_name));
         }
-        eprint!("] ");
+        context.push(']');
 
-        eprintln!("{}", self.name);
-        eprintln!("Message: {}", self.message);
+        eprintln!(
+            "{} {} {}",
+            "ERROR".red().bold(),
+            context.yellow(),
+            self.name.bright_red().bold()
+        );
+        eprintln!("{}: {}", "Message".bright_blue(), self.message);
     }
 }

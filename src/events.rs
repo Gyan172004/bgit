@@ -36,10 +36,12 @@ pub(crate) enum HookType {
 /// }
 /// List of various Git Events to be called with git2-rs library
 pub(crate) trait AtomicEvent {
-    fn new(name: &str, action_description: &str) -> Self
+    fn new() -> Self
     where
         Self: Sized;
     fn get_name(&self) -> &str;
+
+    #[allow(unused)]
     fn get_action_description(&self) -> &str;
     fn add_pre_check_rule(&mut self, rule: Box<dyn Rule + Send + Sync>);
     fn get_pre_check_rule(&self) -> &Vec<Box<dyn Rule + Send + Sync>>;
@@ -172,12 +174,5 @@ pub(crate) trait AtomicEvent {
             )));
         }
         Ok(true)
-    }
-
-    fn copy_struct(&self) -> Self
-    where
-        Self: Sized,
-    {
-        Self::new(self.get_name(), self.get_action_description())
     }
 }

@@ -39,7 +39,7 @@ pub(crate) enum RuleOutput {
 ///     level: RuleLevel
 /// }
 pub(crate) trait Rule {
-    fn new(name: &str, description: &str, level: RuleLevel) -> Self
+    fn new() -> Self
     where
         Self: Sized;
     fn get_name(&self) -> &str;
@@ -97,12 +97,5 @@ pub(crate) trait Rule {
             RuleOutput::Success => Ok(true),
             RuleOutput::Exception(_) => Ok(false),
         }
-    }
-
-    fn copy_struct(&self) -> Self
-    where
-        Self: Sized,
-    {
-        Self::new(self.get_name(), self.get_description(), self.get_level())
     }
 }

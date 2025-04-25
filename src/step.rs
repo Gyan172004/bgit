@@ -13,14 +13,19 @@ pub(crate) enum Task {
 }
 
 impl std::cmp::PartialEq for Task {
-    fn eq(&self, _rhs: &Task) -> bool {
-        // Disabled compare matching for Task enum
-        todo!("Implement Task PartialEq Matching for dyn types")
+    fn eq(&self, other: &Task) -> bool {
+        // TODO: Improve the core matching logic for Task
+        match (self, other) {
+            (Task::ActionStepTask(a), Task::ActionStepTask(b)) => a.get_name() == b.get_name(),
+            (Task::PromptStepTask(a), Task::PromptStepTask(b)) => a.get_name() == b.get_name(),
+            (Task::ActionStepTask(_), Task::PromptStepTask(_)) => false,
+            (Task::PromptStepTask(_), Task::ActionStepTask(_)) => false,
+        }
     }
 }
 
 pub(crate) trait ActionStep {
-    fn new(name: &str) -> Self
+    fn new() -> Self
     where
         Self: Sized;
     fn get_name(&self) -> &str;
@@ -28,7 +33,7 @@ pub(crate) trait ActionStep {
 }
 
 pub(crate) trait PromptStep {
-    fn new(name: &str) -> Self
+    fn new() -> Self
     where
         Self: Sized;
     fn get_name(&self) -> &str;

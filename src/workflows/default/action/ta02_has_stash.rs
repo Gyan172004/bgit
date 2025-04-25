@@ -1,8 +1,7 @@
 use crate::{
     bgit_error::BGitError,
-    common_store::{event_store::EVENT_GIT_ADD, rules_store::RULE_IS_GIT_INSTALLED_LOCALLY},
-    events::AtomicEvent,
-    rules::Rule,
+    events::{git_add::GitAdd, AtomicEvent},
+    rules::{a01_git_install::IsGitInstalledLocally, Rule},
     step::{ActionStep, Step},
 };
 use git2::Repository;
@@ -13,12 +12,12 @@ pub(crate) struct HasStash {
 }
 
 impl ActionStep for HasStash {
-    fn new(name: &str) -> Self
+    fn new() -> Self
     where
         Self: Sized,
     {
         HasStash {
-            name: name.to_owned(),
+            name: "has_stash".to_owned(),
         }
     }
     fn get_name(&self) -> &str {
@@ -38,8 +37,8 @@ impl ActionStep for HasStash {
                 })
                 .is_ok();
 
-            let mut git_add_event = EVENT_GIT_ADD.copy_struct();
-            git_add_event.add_pre_check_rule(Box::new(RULE_IS_GIT_INSTALLED_LOCALLY.copy_struct()));
+            let mut git_add_event = GitAdd::new();
+            git_add_event.add_pre_check_rule(Box::new(IsGitInstalledLocally::new()));
             git_add_event.execute()?;
 
             Ok(Step::Stop)

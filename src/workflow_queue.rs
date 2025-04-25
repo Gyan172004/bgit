@@ -9,13 +9,12 @@ use std::time::Instant;
 const HATCHING_CHICK_EMOJI: &str = "🐣";
 
 pub(crate) struct WorkflowQueue {
-    name: String,
     init_step: Step,
     pb: ProgressBar,
 }
 
 impl WorkflowQueue {
-    pub(crate) fn new(name: &str, init_step: Step) -> Self {
+    pub(crate) fn new(init_step: Step) -> Self {
         // Initialize spinner for progress indication
         let pb = ProgressBar::new_spinner();
         pb.enable_steady_tick(Duration::from_millis(200));
@@ -26,11 +25,7 @@ impl WorkflowQueue {
             .unwrap(),
         );
 
-        WorkflowQueue {
-            name: name.to_owned(),
-            init_step,
-            pb,
-        }
+        WorkflowQueue { init_step, pb }
     }
 
     fn run_step_and_traverse(&self, task: &Task) -> Result<Step, Box<BGitError>> {

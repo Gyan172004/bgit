@@ -29,9 +29,6 @@ bgit is a simplified wrapper for Git, designed specifically for absolute beginne
 
 ## Installation
 
-> [!WARNING]
-> Windows compilation is broken, as `hook_executor` is not implemented yet for that platform! Fix on the way :wink:
-
 bgit is written in Rust, ensuring fast performance and reliability. To install bgit, follow these steps:
 
 1. Ensure you have Rust installed. You can install Rust using rustup by following the instructions on [rustup.rs](https://rustup.rs/).

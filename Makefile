@@ -86,3 +86,5 @@ coverage:
 	cargo llvm-cov clean --workspace --html --output-dir=coverage
 	cargo llvm-cov --all-features --workspace --no-clean --html --output-dir=coverage --open
 
+release:
+	cargo smart-release bgit --execute --update-crates-index
