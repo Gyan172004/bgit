@@ -2,10 +2,19 @@
 
 **Rule ID**: `RULE_<kebab-case-rule-name>`  
 **Status**: Draft / Final  
-**Author**: <Your Name / Team>  
+**Author**: <Your Name | Team>  
 **Created**: YYYY-MM-DD  
 **Updated**: YYYY-MM-DD  
 **Version**: v1.0.0  
+**RuleLevel**: Skip | Warning | Error
+
+<!--  
+RuleLevel determines how strictly the rule is enforced:
+
+- `Skip`: The rule is not checked or enforced. Useful for opt-out rules.
+- `Warning`: Violations produce a warning and optionally attempt auto-fix, but the operation continues.
+- `Error`: Violations cause the operation to fail unless auto-fixed successfully.
+-->
 
 ---
 
@@ -102,27 +111,45 @@ Explain **what is required** and **what is prohibited**.
 - Static analysis/linting
 - Custom CLI scripts
 
-## 8. Exceptions & Edge Cases
+## 8. Possible Fixes
+
+List known strategies or automated fixes to resolve violations of this rule.
+
+### Manual Fix:
+> _Describe what a developer should do manually to fix the issue._
+
+### Automated Fix Suggestions:
+> _Describe any logic or tool that could be used to auto-resolve the violation._
+
+### Example:
+```bash
+# Automatically remove .env from staging
+git reset .env
+```
+
+- If no automated fix is available, write `None`.
+
+## 9. Exceptions & Edge Cases
 
 - When can this rule be bypassed?  
 - Who can bypass it?  
 - Are there files, branches, or roles exempt?  
 - Add any whitelisted scenarios explicitly.
 
-## 9. Drawbacks
+## 10. Drawbacks
 
 > List any trade-offs or potential downsides of enforcing this rule.  
 > Could it cause friction or false positives?
 
 ---
 
-## 🧷 10. Related Rules / RFCs
+## 11. Related Rules / RFCs
 
 - <Add any related or dependent rule files>
 
 ---
 
-## 🕘 11. Revision History
+## 12. Revision History
 
 | Date       | Version | Author        | Notes                         |
 |------------|---------|---------------|-------------------------------|
@@ -131,7 +158,7 @@ Explain **what is required** and **what is prohibited**.
 
 ---
 
-## 📖 12. Glossary
+## 13. Glossary
 
 | Term | Definition |
 |------|------------|
@@ -141,7 +168,7 @@ Explain **what is required** and **what is prohibited**.
 
 ---
 
-## 🔗 13. References
+## 14. References
 
 - <any relevant link or resource>
 ---
