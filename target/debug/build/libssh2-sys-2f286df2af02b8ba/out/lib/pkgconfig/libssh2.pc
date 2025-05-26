@@ -1,0 +1,17 @@
+###########################################################################
+# libssh2 installation details
+###########################################################################
+
+prefix=/home/lildicky/Projects/bgit/target/debug/build/libssh2-sys-2f286df2af02b8ba/out
+exec_prefix=
+libdir=/home/lildicky/Projects/bgit/target/debug/build/libssh2-sys-2f286df2af02b8ba/out/lib
+includedir=/home/lildicky/Projects/bgit/target/debug/build/libssh2-sys-2f286df2af02b8ba/out/include
+
+Name: libssh2
+URL: https://www.libssh2.org/
+Description: Library for SSH-based communication
+Version: 1.10.1_DEV
+Requires.private: 
+Libs: -L${libdir} -lssh2 
+Libs.private: 
+Cflags: -I${includedir}

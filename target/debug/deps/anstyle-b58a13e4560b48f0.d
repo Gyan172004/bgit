@@ -1,0 +1,12 @@
+/home/lildicky/Projects/bgit/target/debug/deps/libanstyle-b58a13e4560b48f0.rmeta: /home/lildicky/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/anstyle-1.0.8/src/lib.rs /home/lildicky/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/anstyle-1.0.8/src/macros.rs /home/lildicky/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/anstyle-1.0.8/src/color.rs /home/lildicky/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/anstyle-1.0.8/src/effect.rs /home/lildicky/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/anstyle-1.0.8/src/reset.rs /home/lildicky/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/anstyle-1.0.8/src/style.rs
+
+/home/lildicky/Projects/bgit/target/debug/deps/libanstyle-b58a13e4560b48f0.rlib: /home/lildicky/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/anstyle-1.0.8/src/lib.rs /home/lildicky/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/anstyle-1.0.8/src/macros.rs /home/lildicky/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/anstyle-1.0.8/src/color.rs /home/lildicky/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/anstyle-1.0.8/src/effect.rs /home/lildicky/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/anstyle-1.0.8/src/reset.rs /home/lildicky/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/anstyle-1.0.8/src/style.rs
+
+/home/lildicky/Projects/bgit/target/debug/deps/anstyle-b58a13e4560b48f0.d: /home/lildicky/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/anstyle-1.0.8/src/lib.rs /home/lildicky/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/anstyle-1.0.8/src/macros.rs /home/lildicky/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/anstyle-1.0.8/src/color.rs /home/lildicky/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/anstyle-1.0.8/src/effect.rs /home/lildicky/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/anstyle-1.0.8/src/reset.rs /home/lildicky/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/anstyle-1.0.8/src/style.rs
+
+/home/lildicky/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/anstyle-1.0.8/src/lib.rs:
+/home/lildicky/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/anstyle-1.0.8/src/macros.rs:
+/home/lildicky/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/anstyle-1.0.8/src/color.rs:
+/home/lildicky/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/anstyle-1.0.8/src/effect.rs:
+/home/lildicky/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/anstyle-1.0.8/src/reset.rs:
+/home/lildicky/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/anstyle-1.0.8/src/style.rs:

@@ -1,0 +1,11 @@
+/home/lildicky/Projects/bgit/target/debug/deps/libtinyvec-b413a2a8dff1eb14.rmeta: /home/lildicky/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tinyvec-1.8.0/src/lib.rs /home/lildicky/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tinyvec-1.8.0/src/array.rs /home/lildicky/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tinyvec-1.8.0/src/array/generated_impl.rs /home/lildicky/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tinyvec-1.8.0/src/arrayvec.rs /home/lildicky/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tinyvec-1.8.0/src/arrayvec_drain.rs /home/lildicky/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tinyvec-1.8.0/src/slicevec.rs /home/lildicky/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tinyvec-1.8.0/src/tinyvec.rs
+
+/home/lildicky/Projects/bgit/target/debug/deps/tinyvec-b413a2a8dff1eb14.d: /home/lildicky/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tinyvec-1.8.0/src/lib.rs /home/lildicky/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tinyvec-1.8.0/src/array.rs /home/lildicky/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tinyvec-1.8.0/src/array/generated_impl.rs /home/lildicky/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tinyvec-1.8.0/src/arrayvec.rs /home/lildicky/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tinyvec-1.8.0/src/arrayvec_drain.rs /home/lildicky/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tinyvec-1.8.0/src/slicevec.rs /home/lildicky/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tinyvec-1.8.0/src/tinyvec.rs
+
+/home/lildicky/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tinyvec-1.8.0/src/lib.rs:
+/home/lildicky/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tinyvec-1.8.0/src/array.rs:
+/home/lildicky/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tinyvec-1.8.0/src/array/generated_impl.rs:
+/home/lildicky/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tinyvec-1.8.0/src/arrayvec.rs:
+/home/lildicky/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tinyvec-1.8.0/src/arrayvec_drain.rs:
+/home/lildicky/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tinyvec-1.8.0/src/slicevec.rs:
+/home/lildicky/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/tinyvec-1.8.0/src/tinyvec.rs:
