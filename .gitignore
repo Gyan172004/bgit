@@ -1,2 +1,5 @@
-.env
 target/
+.vscode/
+.idea/
+lcov.info
+/coverage
